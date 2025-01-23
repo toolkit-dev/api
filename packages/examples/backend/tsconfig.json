@@ -1,0 +1,34 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": ["."],
+  "exclude": ["./dist", "./node_modules"],
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+  },
+  "references": [
+    {
+      "path": "../../jsonapi/jsonapi-serializer"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-types"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-zod"
+    },
+    {
+      "path": "../../openapi/openapi-client-fetch"
+    },
+    {
+      "path": "../../openapi/openapi-core"
+    },
+    {
+      "path": "../../openapi/openapi-document-zod"
+    },
+    {
+      "path": "../../openapi/openapi-server-hono"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@jsonapi/serializer",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean:cache": "rm -rf ./dist",
+    "clean:deps": "rm -rf ./node_modules",
+    "format": "prettier --write .",
+    "knex": "knex",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@jsonapi/types": "workspace:*",
+    "@jsonapi/zod": "workspace:*",
+    "p-props": "5.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "4.14.191",
+    "@types/node": "20.14.8",
+    "knex": "3.1.0",
+    "lodash": "4.17.21",
+    "objection": "3.0.1",
+    "sqlite3": "5.1.4",
+    "typescript": "5.7.3",
+    "type-fest": "4.35.0",
+    "vitest": "3.0.5",
+    "zod": "3.24.2"
+  },
+  "peerDependencies": {
+    "zod": "3.24.2"
+  }
+}

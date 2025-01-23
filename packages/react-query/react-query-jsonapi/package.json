@@ -1,0 +1,31 @@
+{
+  "name": "@toolkit-dev/react-query-jsonapi",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean:cache": "rm -rf ./dist",
+    "clean:deps": "rm -rf ./node_modules",
+    "format": "prettier --write .",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@jsonapi/types": "workspace:*",
+    "@toolkit-dev/openapi-client-fetch": "workspace:*",
+    "@toolkit-dev/openapi-core": "workspace:*",
+    "@tanstack/react-query": "5.66.11",
+    "type-fest": "4.35.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.8",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  }
+}

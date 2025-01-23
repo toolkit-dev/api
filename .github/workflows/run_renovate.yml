@@ -1,0 +1,9 @@
+name: renovate
+on:
+  schedule:
+    - cron: "0/15 * * * *" # every 15 minutes
+jobs:
+  renovate:
+    uses: devtemplates/github/.github/workflows/call_renovate.yml@test-v1
+    secrets:
+      RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
