@@ -1,0 +1,30 @@
+{
+  "name": "@toolkit-dev/api",
+  "version": "0.0.1",
+  "description": "Toolkit provides everything you need to build end-to-end typesafe APIs—define once, and ship with confidence.",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "pnpm clean:cache && pnpm clean:deps",
+    "clean:cache": "pnpm -r run clean:cache",
+    "clean:deps": "pnpm -r run clean:deps && rm -rf ./node_modules",
+    "dev": "turbowatch",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "19.4.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "eslint": "8.57.0",
+    "husky": "9.1.5",
+    "lint-staged": "15.2.9",
+    "neostandard": "0.12.1",
+    "prettier": "3.3.3",
+    "turbowatch": "2.29.4",
+    "typescript": "5.7.3"
+  }
+}

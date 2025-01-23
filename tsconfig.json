@@ -1,0 +1,42 @@
+{
+  "extends": "./tsconfig.options.json",
+  "files": ["./turbowatch.ts"],
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "references": [
+    {
+      "path": "./packages/examples/backend"
+    },
+    {
+      "path": "./packages/jsonapi/jsonapi-parser"
+    },
+    {
+      "path": "./packages/jsonapi/jsonapi-serializer"
+    },
+    {
+      "path": "./packages/jsonapi/jsonapi-types"
+    },
+    {
+      "path": "./packages/jsonapi/jsonapi-zod"
+    },
+    {
+      "path": "./packages/openapi/openapi-client-fetch"
+    },
+    {
+      "path": "./packages/openapi/openapi-core"
+    },
+    {
+      "path": "./packages/openapi/openapi-document-zod"
+    },
+    {
+      "path": "./packages/openapi/openapi-server-hono"
+    },
+    {
+      "path": "./packages/react-query/react-query-jsonapi"
+    },
+    {
+      "path": "./packages/react-query/react-query-fetch"
+    }
+  ]
+}

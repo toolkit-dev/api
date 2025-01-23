@@ -1,0 +1,24 @@
+{
+  "name": "@toolkit-dev/errors",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean:cache": "rm -rf ./dist",
+    "clean:deps": "rm -rf ./node_modules",
+    "format": "prettier --write .",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.8",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  }
+}

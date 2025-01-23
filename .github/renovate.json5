@@ -1,0 +1,6 @@
+{
+  baseBranches: ["main"],
+  extends: ["github>devtemplates/renovate-config"],
+  // Allows testing config against branches other than the default ("main")
+  useBaseBranchConfig: "merge",
+}

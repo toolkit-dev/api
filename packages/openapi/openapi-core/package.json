@@ -1,0 +1,32 @@
+{
+  "name": "@toolkit-dev/openapi-core",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./*": "./dist/*.js"
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean:cache": "rm -rf ./dist",
+    "clean:deps": "rm -rf ./node_modules",
+    "format": "prettier --write .",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@standard-schema/spec": "1.0.0",
+    "hono": "4.7.0",
+    "openapi3-ts": "4.4.0",
+    "type-fest": "4.35.0",
+    "zod": "3.24.2",
+    "zod-openapi": "4.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.8",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  }
+}
