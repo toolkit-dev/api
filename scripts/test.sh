@@ -1,3 +1,4 @@
 #!/bin/bash
 set -e
-pnpm run test
+
+nix develop --command pnpm test
