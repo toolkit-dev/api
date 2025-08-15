@@ -393,6 +393,22 @@ importers:
         specifier: 3.24.2
         version: 3.24.2
 
+  packages/openapi/openapi-standard-schema:
+    dependencies:
+      '@standard-schema/spec':
+        specifier: 1.0.0
+        version: 1.0.0
+    devDependencies:
+      '@types/node':
+        specifier: 20.14.8
+        version: 20.14.8
+      typescript:
+        specifier: 5.7.3
+        version: 5.7.3
+      vitest:
+        specifier: 3.0.5
+        version: 3.0.5(@types/node@20.14.8)(jiti@2.4.2)(tsx@4.19.3)(yaml@2.7.0)
+
   packages/react-query/react-query-fetch:
     dependencies:
       '@tanstack/react-query':
