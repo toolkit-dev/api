@@ -20,8 +20,6 @@
 // status?: number;
 // payload?: Record<string, any>;
 
-export const StdErrorData = Symbol("StdErrorData");
-
 /**
  *
  */
