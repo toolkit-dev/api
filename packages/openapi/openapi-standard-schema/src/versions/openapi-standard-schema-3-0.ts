@@ -30,12 +30,12 @@ export namespace OpenAPIV3_0 {
    */
   export interface OpenAPIObject extends SpecificationExtension {
     /**
-     * REQUIRED. This string MUST be the semantic version number of the
+     * This string MUST be the semantic version number of the
      * OpenAPI Specification version that the OpenAPI document uses.
      */
     openapi: "3.0.4";
     /**
-     * REQUIRED. Provides metadata about the API. The metadata MAY be used
+     * Provides metadata about the API. The metadata MAY be used
      * by tooling as required.
      */
     info: InfoObject;
@@ -45,7 +45,7 @@ export namespace OpenAPIV3_0 {
      */
     servers?: ServerObject[];
     /**
-     * REQUIRED. The available paths and operations for the API.
+     * The available paths and operations for the API.
      */
     paths: PathsObject;
     /**
@@ -75,7 +75,7 @@ export namespace OpenAPIV3_0 {
    */
   export interface InfoObject extends SpecificationExtension {
     /**
-     * REQUIRED. The title of the API.
+     * The title of the API.
      */
     title: string;
     /**
@@ -97,7 +97,7 @@ export namespace OpenAPIV3_0 {
      */
     license?: LicenseObject;
     /**
-     * REQUIRED. The version of the OpenAPI document (which is distinct from
+     * The version of the OpenAPI document (which is distinct from
      * the OpenAPI Specification version or the API implementation version).
      */
     version: string;
@@ -132,7 +132,7 @@ export namespace OpenAPIV3_0 {
    */
   export interface LicenseObject extends SpecificationExtension {
     /**
-     * REQUIRED. The license name used for the API.
+     * The license name used for the API.
      */
     name: string;
     /**
@@ -148,7 +148,7 @@ export namespace OpenAPIV3_0 {
    */
   export interface ServerObject extends SpecificationExtension {
     /**
-     * REQUIRED. A URL to the target host. This URL supports Server Variables
+     * A URL to the target host. This URL supports Server Variables
      * and MAY be relative, to indicate that the host location is relative to
      * the location where the OpenAPI document is being served.
      */
@@ -178,7 +178,7 @@ export namespace OpenAPIV3_0 {
      */
     enum?: string[];
     /**
-     * REQUIRED. The default value to use for substitution, which SHALL be
+     * The default value to use for substitution, which SHALL be
      * sent if an alternate value is not supplied.
      */
     default: string;
@@ -322,7 +322,7 @@ export namespace OpenAPIV3_0 {
      */
     requestBody?: ReferenceObject | RequestBodyObject;
     /**
-     * REQUIRED. The list of possible responses as they are returned from
+     * The list of possible responses as they are returned from
      * executing this operation.
      */
     responses: ResponsesObject;
@@ -355,7 +355,7 @@ export namespace OpenAPIV3_0 {
   export interface ExternalDocumentationObject extends SpecificationExtension {
     /** A short description of the target documentation. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. The URL for the target documentation. Value MUST be in the format of a URL. */
+    /** The URL for the target documentation. Value MUST be in the format of a URL. */
     url: string;
   }
 
@@ -365,11 +365,11 @@ export namespace OpenAPIV3_0 {
    * Describes a single operation parameter.
    */
   export interface ParameterObject extends ParameterBaseObject {
-    /** REQUIRED. The name of the parameter. Parameter names are case sensitive. */
+    /** The name of the parameter. Parameter names are case sensitive. */
     name: string;
-    /** REQUIRED. The location of the parameter. Possible values are "query", "header", "path" or "cookie". */
+    /** The location of the parameter. Possible values are "query", "header", "path" or "cookie". */
     in: "query" | "header" | "path" | "cookie";
-    /** Determines whether this parameter is mandatory. If the parameter location is "path", this property is REQUIRED and its value MUST be true. */
+    /** Determines whether this parameter is mandatory. If the parameter location is "path", this property is required and its value MUST be true. */
     required?: boolean;
   }
 
@@ -426,7 +426,7 @@ export namespace OpenAPIV3_0 {
   export interface RequestBodyObject extends SpecificationExtension {
     /** A brief description of the request body. This could contain examples of use. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. The content of the request body. The key is a media type or media type range and the value describes it. */
+    /** The content of the request body. The key is a media type or media type range and the value describes it. */
     content: { [media: string]: MediaTypeObject };
     /** Determines if the request body is required in the request. Defaults to false. */
     required?: boolean;
@@ -484,7 +484,7 @@ export namespace OpenAPIV3_0 {
    * Describes a single response from an API Operation, including design-time, static links to operations based on the response.
    */
   export interface ResponseObject extends SpecificationExtension {
-    /** REQUIRED. A short description of the response. CommonMark syntax MAY be used for rich text representation. */
+    /** A short description of the response. CommonMark syntax MAY be used for rich text representation. */
     description: string;
     /** Maps a header name to its definition. RFC7230 states header names are case insensitive. */
     headers?: { [header: string]: ReferenceObject | HeaderObject };
@@ -546,7 +546,7 @@ export namespace OpenAPIV3_0 {
    * A simple object to allow referencing other components in the specification, internally and externally.
    */
   export interface ReferenceObject extends SpecificationExtension {
-    /** REQUIRED. The reference string. */
+    /** The reference string. */
     $ref: string;
   }
 
@@ -659,7 +659,7 @@ export namespace OpenAPIV3_0 {
    * When request bodies or response payloads may be one of a number of different schemas, a discriminator object can be used to aid in serialization, deserialization, and validation.
    */
   export interface DiscriminatorObject extends SpecificationExtension {
-    /** REQUIRED. The name of the property in the payload that will hold the discriminator value. */
+    /** The name of the property in the payload that will hold the discriminator value. */
     propertyName: string;
     /** An object to hold mappings between payload values and schema names or references. */
     mapping?: { [value: string]: string };
@@ -736,13 +736,13 @@ export namespace OpenAPIV3_0 {
    * Defines an API key security scheme.
    */
   export interface ApiKeySecurityScheme extends SpecificationExtension {
-    /** REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
     type: "apiKey";
     /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. The name of the header, query or cookie parameter to be used. */
+    /** The name of the header, query or cookie parameter to be used. */
     name: string;
-    /** REQUIRED. The location of the API key. Valid values are "query", "header" or "cookie". */
+    /** The location of the API key. Valid values are "query", "header" or "cookie". */
     in: "query" | "header" | "cookie";
   }
 
@@ -752,11 +752,11 @@ export namespace OpenAPIV3_0 {
    * Defines an HTTP security scheme.
    */
   export interface HttpSecurityScheme extends SpecificationExtension {
-    /** REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
     type: "http";
     /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235. */
+    /** The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235. */
     scheme: string;
     /** A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually generated by an authorization server, so this information is primarily for documentation purposes. */
     bearerFormat?: string;
@@ -768,11 +768,11 @@ export namespace OpenAPIV3_0 {
    * Defines an OAuth2 security scheme.
    */
   export interface OAuth2SecurityScheme extends SpecificationExtension {
-    /** REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
     type: "oauth2";
     /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. An object containing configuration information for the flow types supported. */
+    /** An object containing configuration information for the flow types supported. */
     flows: OAuthFlowsObject;
   }
 
@@ -798,11 +798,11 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowImplicit extends SpecificationExtension {
-    /** REQUIRED. The authorization URL to be used for this flow. This MUST be in the form of a URL. */
+    /** The authorization URL to be used for this flow. This MUST be in the form of a URL. */
     authorizationUrl: string;
     /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
     refreshUrl?: string;
-    /** REQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
     scopes: { [scope: string]: string };
   }
 
@@ -812,11 +812,11 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowPassword extends SpecificationExtension {
-    /** REQUIRED. The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
     tokenUrl: string;
     /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
     refreshUrl?: string;
-    /** REQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
     scopes: { [scope: string]: string };
   }
 
@@ -826,11 +826,11 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowClientCredentials extends SpecificationExtension {
-    /** REQUIRED. The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
     tokenUrl: string;
     /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
     refreshUrl?: string;
-    /** REQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
     scopes: { [scope: string]: string };
   }
 
@@ -840,13 +840,13 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowAuthorizationCode extends SpecificationExtension {
-    /** REQUIRED. The authorization URL to be used for this flow. This MUST be in the form of a URL. */
+    /** The authorization URL to be used for this flow. This MUST be in the form of a URL. */
     authorizationUrl: string;
-    /** REQUIRED. The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
     tokenUrl: string;
     /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
     refreshUrl?: string;
-    /** REQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
     scopes: { [scope: string]: string };
   }
 
@@ -856,11 +856,11 @@ export namespace OpenAPIV3_0 {
    * Defines an OpenID Connect security scheme.
    */
   export interface OpenIdConnectSecurityScheme extends SpecificationExtension {
-    /** REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
     type: "openIdConnect";
     /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
-    /** REQUIRED. OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL. */
+    /** OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL. */
     openIdConnectUrl: string;
   }
 
@@ -870,7 +870,7 @@ export namespace OpenAPIV3_0 {
    * Adds metadata to a single tag that is used by the Operation Object. It is not mandatory to have a Tag Object per tag defined in the Operation Object instances.
    */
   export interface TagObject extends SpecificationExtension {
-    /** REQUIRED. The name of the tag. */
+    /** The name of the tag. */
     name: string;
     /** A short description for the tag. CommonMark syntax MAY be used for rich text representation. */
     description?: string;
