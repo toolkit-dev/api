@@ -1,9 +1,10 @@
 /**
  * OpenAPI 3.0.4 TypeScript Type Definitions
  *
- * This file contains comprehensive TypeScript type definitions for the OpenAPI Specification v3.0.4.
- * Portions of the documentation text are derived from the OpenAPI Specification v3.0.4,
- * which is licensed under the Apache License 2.0.
+ * This file contains comprehensive TypeScript type definitions for the
+ * OpenAPI Specification v3.0.4. Portions of the documentation text are
+ * derived from the OpenAPI Specification v3.0.4, which is licensed under
+ * the Apache License 2.0.
  *
  * OpenAPI Specification: https://spec.openapis.org/oas/v3.0.4
  * License: https://github.com/OAI/OpenAPI-Specification/blob/main/LICENSE
@@ -13,8 +14,10 @@ export namespace OpenAPIV3_0 {
   /**
    * Specification Extensions
    *
-   * While the OpenAPI Specification tries to accommodate most use cases, additional data can be added to extend the specification at certain points.
-   * The extensions properties are implemented as patterned fields that are always prefixed by "x-".
+   * While the OpenAPI Specification tries to accommodate most use cases,
+   * additional data can be added to extend the specification at certain
+   * points. The extensions properties are implemented as patterned fields
+   * that are always prefixed by "x-".
    */
   export interface SpecificationExtension {
     [extension: `x-${string}`]: any;
@@ -26,41 +29,77 @@ export namespace OpenAPIV3_0 {
    * This is the root document object of the OpenAPI document.
    */
   export interface OpenAPIObject extends SpecificationExtension {
-    /** REQUIRED. This string MUST be the semantic version number of the OpenAPI Specification version that the OpenAPI document uses. */
+    /**
+     * REQUIRED. This string MUST be the semantic version number of the
+     * OpenAPI Specification version that the OpenAPI document uses.
+     */
     openapi: "3.0.4";
-    /** REQUIRED. Provides metadata about the API. The metadata MAY be used by tooling as required. */
+    /**
+     * REQUIRED. Provides metadata about the API. The metadata MAY be used
+     * by tooling as required.
+     */
     info: InfoObject;
-    /** An array of Server Objects, which provide connectivity information to a target server. */
+    /**
+     * An array of Server Objects, which provide connectivity information
+     * to a target server.
+     */
     servers?: ServerObject[];
-    /** REQUIRED. The available paths and operations for the API. */
+    /**
+     * REQUIRED. The available paths and operations for the API.
+     */
     paths: PathsObject;
-    /** An element to hold various schemas for the specification. */
+    /**
+     * An element to hold various schemas for the specification.
+     */
     components?: ComponentsObject;
-    /** A declaration of which security mechanisms can be used across the API. */
+    /**
+     * A declaration of which security mechanisms can be used across the API.
+     */
     security?: SecurityRequirementObject[];
-    /** A list of tags used by the specification with additional metadata. */
+    /**
+     * A list of tags used by the specification with additional metadata.
+     */
     tags?: TagObject[];
-    /** Additional external documentation. */
+    /**
+     * Additional external documentation.
+     */
     externalDocs?: ExternalDocumentationObject;
   }
 
   /**
    * Info Object
    *
-   * The object provides metadata about the API. The metadata MAY be used by the clients if needed, and MAY be presented in editing or documentation generation tools for convenience.
+   * The object provides metadata about the API. The metadata MAY be used by
+   * the clients if needed, and MAY be presented in editing or documentation
+   * generation tools for convenience.
    */
   export interface InfoObject extends SpecificationExtension {
-    /** REQUIRED. The title of the API. */
+    /**
+     * REQUIRED. The title of the API.
+     */
     title: string;
-    /** A short description of the API. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description of the API. CommonMark syntax MAY be used for
+     * rich text representation.
+     */
     description?: string;
-    /** A URL to the Terms of Service for the API. MUST be in the format of a URL. */
+    /**
+     * A URL to the Terms of Service for the API. MUST be in the format
+     * of a URL.
+     */
     termsOfService?: string;
-    /** The contact information for the exposed API. */
+    /**
+     * The contact information for the exposed API.
+     */
     contact?: ContactObject;
-    /** The license information for the exposed API. */
+    /**
+     * The license information for the exposed API.
+     */
     license?: LicenseObject;
-    /** REQUIRED. The version of the OpenAPI document (which is distinct from the OpenAPI Specification version or the API implementation version). */
+    /**
+     * REQUIRED. The version of the OpenAPI document (which is distinct from
+     * the OpenAPI Specification version or the API implementation version).
+     */
     version: string;
   }
 
@@ -70,11 +109,19 @@ export namespace OpenAPIV3_0 {
    * Contact information for the exposed API.
    */
   export interface ContactObject extends SpecificationExtension {
-    /** The identifying name of the contact person/organization. */
+    /**
+     * The identifying name of the contact person/organization.
+     */
     name?: string;
-    /** The URL pointing to the contact information. MUST be in the format of a URL. */
+    /**
+     * The URL pointing to the contact information. MUST be in the format
+     * of a URL.
+     */
     url?: string;
-    /** The email address of the contact person/organization. MUST be in the format of an email address. */
+    /**
+     * The email address of the contact person/organization. MUST be in the
+     * format of an email address.
+     */
     email?: string;
   }
 
@@ -84,9 +131,13 @@ export namespace OpenAPIV3_0 {
    * License information for the exposed API.
    */
   export interface LicenseObject extends SpecificationExtension {
-    /** REQUIRED. The license name used for the API. */
+    /**
+     * REQUIRED. The license name used for the API.
+     */
     name: string;
-    /** A URL to the license used for the API. MUST be in the format of a URL. */
+    /**
+     * A URL to the license used for the API. MUST be in the format of a URL.
+     */
     url?: string;
   }
 
@@ -96,32 +147,56 @@ export namespace OpenAPIV3_0 {
    * An object representing a Server.
    */
   export interface ServerObject extends SpecificationExtension {
-    /** REQUIRED. A URL to the target host. This URL supports Server Variables and MAY be relative, to indicate that the host location is relative to the location where the OpenAPI document is being served. */
+    /**
+     * REQUIRED. A URL to the target host. This URL supports Server Variables
+     * and MAY be relative, to indicate that the host location is relative to
+     * the location where the OpenAPI document is being served.
+     */
     url: string;
-    /** An optional string describing the host designated by the URL. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * An optional string describing the host designated by the URL.
+     * CommonMark syntax MAY be used for rich text representation.
+     */
     description?: string;
-    /** A map between a variable name and its value. The value is used for substitution in the server's URL template. */
+    /**
+     * A map between a variable name and its value. The value is used for
+     * substitution in the server's URL template.
+     */
     variables?: { [variable: string]: ServerVariableObject };
   }
 
   /**
    * Server Variable Object
    *
-   * An object representing a Server Variable for server URL template substitution.
+   * An object representing a Server Variable for server URL template
+   * substitution.
    */
   export interface ServerVariableObject extends SpecificationExtension {
-    /** An enumeration of string values to be used if the substitution options are from a limited set. The array SHOULD NOT be empty. */
+    /**
+     * An enumeration of string values to be used if the substitution options
+     * are from a limited set. The array SHOULD NOT be empty.
+     */
     enum?: string[];
-    /** REQUIRED. The default value to use for substitution, which SHALL be sent if an alternate value is not supplied. */
+    /**
+     * REQUIRED. The default value to use for substitution, which SHALL be
+     * sent if an alternate value is not supplied.
+     */
     default: string;
-    /** An optional description for the server variable. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * An optional description for the server variable. CommonMark syntax
+     * MAY be used for rich text representation.
+     */
     description?: string;
   }
 
-  /** Helper type for path patterns - must start with a forward slash */
+  /**
+   * Helper type for path patterns - must start with a forward slash
+   */
   export type PathPattern = `/${string}`;
 
-  /** HTTP methods supported by OpenAPI */
+  /**
+   * HTTP methods supported by OpenAPI
+   */
   export type HttpMethod =
     | "get"
     | "put"
@@ -135,7 +210,9 @@ export namespace OpenAPIV3_0 {
   /**
    * Paths Object
    *
-   * Holds the relative paths to the individual endpoints and their operations. The path is appended to the URL from the Server Object in order to construct the full URL.
+   * Holds the relative paths to the individual endpoints and their operations.
+   * The path is appended to the URL from the Server Object in order to
+   * construct the full URL.
    */
   export type PathsObject = SpecificationExtension & {
     [pattern in PathPattern]?: PathItemObject;
@@ -144,34 +221,66 @@ export namespace OpenAPIV3_0 {
   /**
    * Path Item Object
    *
-   * Describes the operations available on a single path. A Path Item MAY be empty, due to ACL constraints.
+   * Describes the operations available on a single path. A Path Item MAY be
+   * empty, due to ACL constraints.
    */
   export interface PathItemObject extends SpecificationExtension {
-    /** Allows for an external definition of this path item. The referenced structure MUST be in the format of a Path Item Object. */
+    /**
+     * Allows for an external definition of this path item. The referenced
+     * structure MUST be in the format of a Path Item Object.
+     */
     $ref?: string;
-    /** An optional, string summary, intended to apply to all operations in this path. */
+    /**
+     * An optional, string summary, intended to apply to all operations in
+     * this path.
+     */
     summary?: string;
-    /** An optional, string description, intended to apply to all operations in this path. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * An optional, string description, intended to apply to all operations
+     * in this path. CommonMark syntax MAY be used for rich text
+     * representation.
+     */
     description?: string;
-    /** An alternative server array to service all operations in this path. */
+    /**
+     * An alternative server array to service all operations in this path.
+     */
     servers?: ServerObject[];
-    /** A list of parameters that are applicable for all the operations under this path. */
+    /**
+     * A list of parameters that are applicable for all the operations under
+     * this path.
+     */
     parameters?: (ReferenceObject | ParameterObject)[];
-    /** A definition of a GET operation on this path. */
+    /**
+     * A definition of a GET operation on this path.
+     */
     get?: OperationObject;
-    /** A definition of a PUT operation on this path. */
+    /**
+     * A definition of a PUT operation on this path.
+     */
     put?: OperationObject;
-    /** A definition of a POST operation on this path. */
+    /**
+     * A definition of a POST operation on this path.
+     */
     post?: OperationObject;
-    /** A definition of a DELETE operation on this path. */
+    /**
+     * A definition of a DELETE operation on this path.
+     */
     delete?: OperationObject;
-    /** A definition of a OPTIONS operation on this path. */
+    /**
+     * A definition of a OPTIONS operation on this path.
+     */
     options?: OperationObject;
-    /** A definition of a HEAD operation on this path. */
+    /**
+     * A definition of a HEAD operation on this path.
+     */
     head?: OperationObject;
-    /** A definition of a PATCH operation on this path. */
+    /**
+     * A definition of a PATCH operation on this path.
+     */
     patch?: OperationObject;
-    /** A definition of a TRACE operation on this path. */
+    /**
+     * A definition of a TRACE operation on this path.
+     */
     trace?: OperationObject;
   }
 
@@ -181,29 +290,60 @@ export namespace OpenAPIV3_0 {
    * Describes a single API operation on a path.
    */
   export interface OperationObject extends SpecificationExtension {
-    /** A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier. */
+    /**
+     * A list of tags for API documentation control. Tags can be used for
+     * logical grouping of operations by resources or any other qualifier.
+     */
     tags?: string[];
-    /** A short summary of what the operation does. */
+    /**
+     * A short summary of what the operation does.
+     */
     summary?: string;
-    /** A verbose explanation of the operation behavior. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A verbose explanation of the operation behavior. CommonMark syntax
+     * MAY be used for rich text representation.
+     */
     description?: string;
-    /** Additional external documentation for this operation. */
+    /**
+     * Additional external documentation for this operation.
+     */
     externalDocs?: ExternalDocumentationObject;
-    /** Unique string used to identify the operation. The id MUST be unique among all operations described in the API. */
+    /**
+     * Unique string used to identify the operation. The id MUST be unique
+     * among all operations described in the API.
+     */
     operationId?: string;
-    /** A list of parameters that are applicable for this operation. */
+    /**
+     * A list of parameters that are applicable for this operation.
+     */
     parameters?: (ReferenceObject | ParameterObject)[];
-    /** The request body applicable for this operation. */
+    /**
+     * The request body applicable for this operation.
+     */
     requestBody?: ReferenceObject | RequestBodyObject;
-    /** REQUIRED. The list of possible responses as they are returned from executing this operation. */
+    /**
+     * REQUIRED. The list of possible responses as they are returned from
+     * executing this operation.
+     */
     responses: ResponsesObject;
-    /** A map of possible out-of band callbacks related to the parent operation. */
+    /**
+     * A map of possible out-of band callbacks related to the parent
+     * operation.
+     */
     callbacks?: { [callback: string]: ReferenceObject | CallbackObject };
-    /** Declares this operation to be deprecated. Consumers SHOULD refrain from usage of the declared operation. */
+    /**
+     * Declares this operation to be deprecated. Consumers SHOULD refrain
+     * from usage of the declared operation.
+     */
     deprecated?: boolean;
-    /** A declaration of which security mechanisms can be used for this operation. */
+    /**
+     * A declaration of which security mechanisms can be used for this
+     * operation.
+     */
     security?: SecurityRequirementObject[];
-    /** An alternative server array to service this operation. */
+    /**
+     * An alternative server array to service this operation.
+     */
     servers?: ServerObject[];
   }
 
