@@ -605,9 +605,16 @@ export namespace OpenAPIV3_0 {
      * for rich text representation.
      */
     description?: string;
-    /** Embedded literal example. The value field and externalValue field are mutually exclusive. */
+    /**
+     * Embedded literal example. The value field and externalValue field
+     * are mutually exclusive.
+     */
     value?: any;
-    /** A URL that points to the literal example. This provides the capability to reference examples that cannot easily be included in JSON or YAML documents. */
+    /**
+     * A URL that points to the literal example. This provides the capability
+     * to reference examples that cannot easily be included in JSON or YAML
+     * documents.
+     */
     externalValue?: string;
   }
 
@@ -617,17 +624,35 @@ export namespace OpenAPIV3_0 {
    * The Link object represents a possible design-time link for a response. The presence of a link does not guarantee the caller's ability to successfully invoke it, rather it provides known metadata and structure for a response.
    */
   export interface LinkObject extends SpecificationExtension {
-    /** A relative or absolute URI reference to an OAS operation. This field is mutually exclusive of the operationId field. */
+    /**
+     * A relative or absolute URI reference to an OAS operation. This field
+     * is mutually exclusive of the operationId field.
+     */
     operationRef?: string;
-    /** The name of an existing, resolvable OAS operation, as defined with a unique operationId. This field is mutually exclusive of the operationRef field. */
+    /**
+     * The name of an existing, resolvable OAS operation, as defined with
+     * a unique operationId. This field is mutually exclusive of the
+     * operationRef field.
+     */
     operationId?: string;
-    /** A map representing parameters to pass to an operation as specified with operationId or identified via operationRef. */
+    /**
+     * A map representing parameters to pass to an operation as specified
+     * with operationId or identified via operationRef.
+     */
     parameters?: { [parameter: string]: any };
-    /** A literal value or {expression} to use as a request body when calling the target operation. */
+    /**
+     * A literal value or {expression} to use as a request body when calling
+     * the target operation.
+     */
     requestBody?: any;
-    /** A description of the link. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A description of the link. CommonMark syntax MAY be used for rich
+     * text representation.
+     */
     description?: string;
-    /** A server object to be used by the target operation. */
+    /**
+     * A server object to be used by the target operation.
+     */
     server?: ServerObject;
   }
 
@@ -654,11 +679,20 @@ export namespace OpenAPIV3_0 {
    * Common properties for all schema objects, based on JSON Schema Draft 7 with OpenAPI-specific extensions.
    */
   export interface BaseSchemaObject extends SpecificationExtension {
-    /** Can be used to decorate a user interface with information about the data produced by this user interface. */
+    /**
+     * Can be used to decorate a user interface with information about
+     * the data produced by this user interface.
+     */
     title?: string;
-    /** A description will provide explanation about the purpose of the instance described by this schema. */
+    /**
+     * A description will provide explanation about the purpose of the
+     * instance described by this schema.
+     */
     description?: string;
-    /** See JSON Schema Core and JSON Schema Validation for more information about the use of default. */
+    /**
+     * See JSON Schema Core and JSON Schema Validation for more information
+     * about the use of default.
+     */
     default?: any;
     /** See JSON Schema Validation for more information about the use of multipleOf. */
     multipleOf?: number;
