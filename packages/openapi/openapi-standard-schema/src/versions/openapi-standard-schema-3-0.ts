@@ -445,7 +445,9 @@ export namespace OpenAPIV3_0 {
      * The schema defining the type used for the parameter.
      */
     schema?: ReferenceObject | SchemaObject;
-    /** Example of the parameter's potential value. */
+    /**
+     * Example of the parameter's potential value.
+     */
     example?: any;
     /**
      * Examples of the parameter's potential value. Each example SHOULD contain
@@ -492,7 +494,9 @@ export namespace OpenAPIV3_0 {
      * The schema defining the content of the request, response, or parameter.
      */
     schema?: ReferenceObject | SchemaObject;
-    /** Example of the media type. */
+    /**
+     * Example of the media type.
+     */
     example?: any;
     /**
      * Examples of the media type. Each example object SHOULD match the media
@@ -539,7 +543,9 @@ export namespace OpenAPIV3_0 {
     allowReserved?: boolean;
   }
 
-  /** Helper type for HTTP status codes */
+  /**
+   * Helper type for HTTP status codes
+   */
   export type HttpStatusCode = `${1 | 2 | 3 | 4 | 5}${number}${number}`;
 
   /**
@@ -598,7 +604,9 @@ export namespace OpenAPIV3_0 {
    * In all cases, the example value is expected to be compatible with the type schema of its associated value.
    */
   export interface ExampleObject extends SpecificationExtension {
-    /** Short description for the example. */
+    /**
+     * Short description for the example.
+     */
     summary?: string;
     /**
      * Long description for the example. CommonMark syntax MAY be used
@@ -662,7 +670,9 @@ export namespace OpenAPIV3_0 {
    * A simple object to allow referencing other components in the specification, internally and externally.
    */
   export interface ReferenceObject extends SpecificationExtension {
-    /** The reference string. */
+    /**
+     * The reference string.
+     */
     $ref: string;
   }
 
@@ -694,65 +704,156 @@ export namespace OpenAPIV3_0 {
      * about the use of default.
      */
     default?: any;
-    /** See JSON Schema Validation for more information about the use of multipleOf. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * multipleOf.
+     */
     multipleOf?: number;
-    /** See JSON Schema Validation for more information about the use of maximum. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * maximum.
+     */
     maximum?: number;
-    /** See JSON Schema Validation for more information about the use of exclusiveMaximum. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * exclusiveMaximum.
+     */
     exclusiveMaximum?: boolean;
-    /** See JSON Schema Validation for more information about the use of minimum. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * minimum.
+     */
     minimum?: number;
-    /** See JSON Schema Validation for more information about the use of exclusiveMinimum. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * exclusiveMinimum.
+     */
     exclusiveMinimum?: boolean;
-    /** See JSON Schema Validation for more information about the use of maxLength. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * maxLength.
+     */
     maxLength?: number;
-    /** See JSON Schema Validation for more information about the use of minLength. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * minLength.
+     */
     minLength?: number;
-    /** See JSON Schema Validation for more information about the use of pattern. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * pattern.
+     */
     pattern?: string;
-    /** See JSON Schema Validation for more information about the use of maxItems. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * maxItems.
+     */
     maxItems?: number;
-    /** See JSON Schema Validation for more information about the use of minItems. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * minItems.
+     */
     minItems?: number;
-    /** See JSON Schema Validation for more information about the use of uniqueItems. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * uniqueItems.
+     */
     uniqueItems?: boolean;
-    /** See JSON Schema Validation for more information about the use of maxProperties. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * maxProperties.
+     */
     maxProperties?: number;
-    /** See JSON Schema Validation for more information about the use of minProperties. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * minProperties.
+     */
     minProperties?: number;
-    /** See JSON Schema Validation for more information about the use of required. */
+    /**
+     * See JSON Schema Validation for more information about the use of
+     * required.
+     */
     required?: string[];
-    /** See JSON Schema Validation for more information about the use of enum. */
+    /**
+     * See JSON Schema Validation for more information about the use of enum.
+     */
     enum?: any[];
-    /** Value can be an object or a boolean. When additionalProperties is true, the type of additional properties is unrestricted. */
+    /**
+     * Value can be an object or a boolean. When additionalProperties is true,
+     * the type of additional properties is unrestricted.
+     */
     additionalProperties?: boolean | ReferenceObject | SchemaObject;
-    /** Property definitions MUST be a Schema Object and not a standard JSON Schema. */
+    /**
+     * Property definitions MUST be a Schema Object and not a standard JSON
+     * Schema.
+     */
     properties?: { [name: string]: ReferenceObject | SchemaObject };
-    /** Value MUST be an array. This array SHOULD have at least one element. Elements in the array SHOULD be unique. */
+    /**
+     * Value MUST be an array. This array SHOULD have at least one element.
+     * Elements in the array SHOULD be unique.
+     */
     allOf?: (ReferenceObject | SchemaObject)[];
-    /** Value MUST be an array. This array SHOULD have at least one element. Elements in the array SHOULD be unique. */
+    /**
+     * Value MUST be an array. This array SHOULD have at least one element.
+     * Elements in the array SHOULD be unique.
+     */
     oneOf?: (ReferenceObject | SchemaObject)[];
-    /** Value MUST be an array. This array SHOULD have at least one element. Elements in the array SHOULD be unique. */
+    /**
+     * Value MUST be an array. This array SHOULD have at least one element.
+     * Elements in the array SHOULD be unique.
+     */
     anyOf?: (ReferenceObject | SchemaObject)[];
-    /** This attribute is a schema that validates any instance that is not valid against the "not" schema. */
+    /**
+     * This attribute is a schema that validates any instance that is not
+     * valid against the "not" schema.
+     */
     not?: ReferenceObject | SchemaObject;
-    /** See Data Type Formats for further details. While relying on JSON Schema's defined formats, the OAS offers a few additional predefined formats. */
+    /**
+     * See Data Type Formats for further details. While relying on JSON Schema's
+     * defined formats, the OAS offers a few additional predefined formats.
+     */
     format?: string;
-    /** Allows sending a null value for the defined schema. Default value is false. */
+    /**
+     * Allows sending a null value for the defined schema. Default value is
+     * false.
+     */
     nullable?: boolean;
-    /** Adds support for polymorphism. The discriminator is an object name that is used to differentiate between other schemas which may satisfy the payload description. */
+    /**
+     * Adds support for polymorphism. The discriminator is an object name that
+     * is used to differentiate between other schemas which may satisfy the
+     * payload description.
+     */
     discriminator?: DiscriminatorObject;
-    /** Declares the property as "read only". This means that it MAY be sent as part of a response but SHOULD NOT be sent as part of the request. */
+    /**
+     * Declares the property as "read only". This means that it MAY be sent as
+     * part of a response but SHOULD NOT be sent as part of the request.
+     */
     readOnly?: boolean;
-    /** Declares the property as "write only". Therefore, it MAY be sent as part of a request but SHOULD NOT be sent as part of the response. */
+    /**
+     * Declares the property as "write only". Therefore, it MAY be sent as part
+     * of a request but SHOULD NOT be sent as part of the response.
+     */
     writeOnly?: boolean;
-    /** This MAY be used only on properties schemas. It has no effect on root schemas. Adds additional metadata to describe the XML representation of this property. */
+    /**
+     * This MAY be used only on properties schemas. It has no effect on root
+     * schemas. Adds additional metadata to describe the XML representation of
+     * this property.
+     */
     xml?: XMLObject;
-    /** Additional external documentation for this schema. */
+    /**
+     * Additional external documentation for this schema.
+     */
     externalDocs?: ExternalDocumentationObject;
-    /** A free-form example of the schema. To represent examples that cannot be naturally represented in JSON or YAML, a string value can be used to contain the example with escaping where necessary. */
+    /**
+     * A free-form example of the schema. To represent examples that cannot be
+     * naturally represented in JSON or YAML, a string value can be used to
+     * contain the example with escaping where necessary.
+     */
     example?: any;
-    /** Specifies that a schema is deprecated and SHOULD be transitioned out of usage. Default value is false. */
+    /**
+     * Specifies that a schema is deprecated and SHOULD be transitioned out of
+     * usage. Default value is false.
+     */
     deprecated?: boolean;
   }
 
@@ -762,7 +863,9 @@ export namespace OpenAPIV3_0 {
    * Schema object for non-array types.
    */
   export interface NonArraySchemaObject extends BaseSchemaObject {
-    /** Value MUST be a string. Multiple types via an array are not supported. */
+    /**
+     * Value MUST be a string. Multiple types via an array are not supported.
+     */
     type?: "boolean" | "object" | "number" | "string" | "integer";
   }
 
@@ -772,9 +875,14 @@ export namespace OpenAPIV3_0 {
    * Schema object specifically for array types.
    */
   export interface ArraySchemaObject extends BaseSchemaObject {
-    /** Value MUST be a string. For arrays, the type MUST be "array". */
+    /**
+     * Value MUST be a string. For arrays, the type MUST be "array".
+     */
     type: "array";
-    /** Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema. */
+    /**
+     * Value MUST be an object and not an array. Inline or referenced schema
+     * MUST be of a Schema Object and not a standard JSON Schema.
+     */
     items: ReferenceObject | SchemaObject;
   }
 
@@ -784,9 +892,15 @@ export namespace OpenAPIV3_0 {
    * When request bodies or response payloads may be one of a number of different schemas, a discriminator object can be used to aid in serialization, deserialization, and validation.
    */
   export interface DiscriminatorObject extends SpecificationExtension {
-    /** The name of the property in the payload that will hold the discriminator value. */
+    /**
+     * The name of the property in the payload that will hold the discriminator
+     * value.
+     */
     propertyName: string;
-    /** An object to hold mappings between payload values and schema names or references. */
+    /**
+     * An object to hold mappings between payload values and schema names or
+     * references.
+     */
     mapping?: { [value: string]: string };
   }
 
@@ -796,15 +910,29 @@ export namespace OpenAPIV3_0 {
    * A metadata object that allows for more fine-tuned XML model definitions.
    */
   export interface XMLObject extends SpecificationExtension {
-    /** Replaces the name of the element/attribute used for the described schema property. */
+    /**
+     * Replaces the name of the element/attribute used for the described schema
+     * property.
+     */
     name?: string;
-    /** The URI of the namespace definition. Value MUST be in the form of an absolute URI. */
+    /**
+     * The URI of the namespace definition. Value MUST be in the form of an
+     * absolute URI.
+     */
     namespace?: string;
-    /** The prefix to be used for the name. */
+    /**
+     * The prefix to be used for the name.
+     */
     prefix?: string;
-    /** Declares whether the property definition translates to an attribute instead of an element. Default value is false. */
+    /**
+     * Declares whether the property definition translates to an attribute
+     * instead of an element. Default value is false.
+     */
     attribute?: boolean;
-    /** MAY be used only for an array definition. Signifies whether the array is wrapped or not. Default value is false. */
+    /**
+     * MAY be used only for an array definition. Signifies whether the array is
+     * wrapped or not. Default value is false.
+     */
     wrapped?: boolean;
   }
 
@@ -814,7 +942,10 @@ export namespace OpenAPIV3_0 {
    * Lists the required security schemes to execute this operation. The object can have multiple security schemes declared in it which are all required (that is, there is a logical AND between the schemes).
    */
   export interface SecurityRequirementObject extends SpecificationExtension {
-    /** Each name MUST correspond to a security scheme which is declared in the Security Schemes under the Components Object. */
+    /**
+     * Each name MUST correspond to a security scheme which is declared in the
+     * Security Schemes under the Components Object.
+     */
     [name: string]: string[];
   }
 
@@ -824,23 +955,41 @@ export namespace OpenAPIV3_0 {
    * Holds a set of reusable objects for different aspects of the OAS. All objects defined within the components object will have no effect on the API unless they are explicitly referenced from properties outside the components object.
    */
   export interface ComponentsObject extends SpecificationExtension {
-    /** An object to hold reusable Schema Objects. */
+    /**
+     * An object to hold reusable Schema Objects.
+     */
     schemas?: { [key: string]: ReferenceObject | SchemaObject };
-    /** An object to hold reusable Response Objects. */
+    /**
+     * An object to hold reusable Response Objects.
+     */
     responses?: { [key: string]: ReferenceObject | ResponseObject };
-    /** An object to hold reusable Parameter Objects. */
+    /**
+     * An object to hold reusable Parameter Objects.
+     */
     parameters?: { [key: string]: ReferenceObject | ParameterObject };
-    /** An object to hold reusable Example Objects. */
+    /**
+     * An object to hold reusable Example Objects.
+     */
     examples?: { [key: string]: ReferenceObject | ExampleObject };
-    /** An object to hold reusable Request Body Objects. */
+    /**
+     * An object to hold reusable Request Body Objects.
+     */
     requestBodies?: { [key: string]: ReferenceObject | RequestBodyObject };
-    /** An object to hold reusable Header Objects. */
+    /**
+     * An object to hold reusable Header Objects.
+     */
     headers?: { [key: string]: ReferenceObject | HeaderObject };
-    /** An object to hold reusable Security Scheme Objects. */
+    /**
+     * An object to hold reusable Security Scheme Objects.
+     */
     securitySchemes?: { [key: string]: ReferenceObject | SecuritySchemeObject };
-    /** An object to hold reusable Link Objects. */
+    /**
+     * An object to hold reusable Link Objects.
+     */
     links?: { [key: string]: ReferenceObject | LinkObject };
-    /** An object to hold reusable Callback Objects. */
+    /**
+     * An object to hold reusable Callback Objects.
+     */
     callbacks?: { [key: string]: ReferenceObject | CallbackObject };
   }
 
@@ -861,13 +1010,24 @@ export namespace OpenAPIV3_0 {
    * Defines an API key security scheme.
    */
   export interface ApiKeySecurityScheme extends SpecificationExtension {
-    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /**
+     * The type of the security scheme. Valid values are "apiKey", "http",
+     * "oauth2", "openIdConnect".
+     */
     type: "apiKey";
-    /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description for security scheme. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description?: string;
-    /** The name of the header, query or cookie parameter to be used. */
+    /**
+     * The name of the header, query or cookie parameter to be used.
+     */
     name: string;
-    /** The location of the API key. Valid values are "query", "header" or "cookie". */
+    /**
+     * The location of the API key. Valid values are "query", "header" or
+     * "cookie".
+     */
     in: "query" | "header" | "cookie";
   }
 
@@ -877,13 +1037,26 @@ export namespace OpenAPIV3_0 {
    * Defines an HTTP security scheme.
    */
   export interface HttpSecurityScheme extends SpecificationExtension {
-    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /**
+     * The type of the security scheme. Valid values are "apiKey", "http",
+     * "oauth2", "openIdConnect".
+     */
     type: "http";
-    /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description for security scheme. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description?: string;
-    /** The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235. */
+    /**
+     * The name of the HTTP Authorization scheme to be used in the Authorization
+     * header as defined in RFC7235.
+     */
     scheme: string;
-    /** A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually generated by an authorization server, so this information is primarily for documentation purposes. */
+    /**
+     * A hint to the client to identify how the bearer token is formatted.
+     * Bearer tokens are usually generated by an authorization server, so this
+     * information is primarily for documentation purposes.
+     */
     bearerFormat?: string;
   }
 
@@ -893,11 +1066,20 @@ export namespace OpenAPIV3_0 {
    * Defines an OAuth2 security scheme.
    */
   export interface OAuth2SecurityScheme extends SpecificationExtension {
-    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /**
+     * The type of the security scheme. Valid values are "apiKey", "http",
+     * "oauth2", "openIdConnect".
+     */
     type: "oauth2";
-    /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description for security scheme. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description?: string;
-    /** An object containing configuration information for the flow types supported. */
+    /**
+     * An object containing configuration information for the flow types
+     * supported.
+     */
     flows: OAuthFlowsObject;
   }
 
@@ -907,13 +1089,23 @@ export namespace OpenAPIV3_0 {
    * Allows configuration of the supported OAuth Flows.
    */
   export interface OAuthFlowsObject extends SpecificationExtension {
-    /** Configuration for the OAuth Implicit flow */
+    /**
+     * Configuration for the OAuth Implicit flow
+     */
     implicit?: OAuthFlowImplicit;
-    /** Configuration for the OAuth Resource Owner Password flow */
+    /**
+     * Configuration for the OAuth Resource Owner Password flow
+     */
     password?: OAuthFlowPassword;
-    /** Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0. */
+    /**
+     * Configuration for the OAuth Client Credentials flow. Previously called
+     * application in OpenAPI 2.0.
+     */
     clientCredentials?: OAuthFlowClientCredentials;
-    /** Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0. */
+    /**
+     * Configuration for the OAuth Authorization Code flow. Previously called
+     * accessCode in OpenAPI 2.0.
+     */
     authorizationCode?: OAuthFlowAuthorizationCode;
   }
 
@@ -923,11 +1115,20 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowImplicit extends SpecificationExtension {
-    /** The authorization URL to be used for this flow. This MUST be in the form of a URL. */
+    /**
+     * The authorization URL to be used for this flow. This MUST be in the form
+     * of a URL.
+     */
     authorizationUrl: string;
-    /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
+    /**
+     * The URL to be used for obtaining refresh tokens. This MUST be in the
+     * form of a URL.
+     */
     refreshUrl?: string;
-    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /**
+     * The available scopes for the OAuth2 security scheme. A map between the
+     * scope name and a short description for it. The map MAY be empty.
+     */
     scopes: { [scope: string]: string };
   }
 
@@ -937,11 +1138,20 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowPassword extends SpecificationExtension {
-    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /**
+     * The token URL to be used for this flow. This MUST be in the form of a
+     * URL.
+     */
     tokenUrl: string;
-    /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
+    /**
+     * The URL to be used for obtaining refresh tokens. This MUST be in the
+     * form of a URL.
+     */
     refreshUrl?: string;
-    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /**
+     * The available scopes for the OAuth2 security scheme. A map between the
+     * scope name and a short description for it. The map MAY be empty.
+     */
     scopes: { [scope: string]: string };
   }
 
@@ -951,11 +1161,20 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowClientCredentials extends SpecificationExtension {
-    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /**
+     * The token URL to be used for this flow. This MUST be in the form of a
+     * URL.
+     */
     tokenUrl: string;
-    /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
+    /**
+     * The URL to be used for obtaining refresh tokens. This MUST be in the
+     * form of a URL.
+     */
     refreshUrl?: string;
-    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /**
+     * The available scopes for the OAuth2 security scheme. A map between the
+     * scope name and a short description for it. The map MAY be empty.
+     */
     scopes: { [scope: string]: string };
   }
 
@@ -965,13 +1184,25 @@ export namespace OpenAPIV3_0 {
    * Configuration details for a supported OAuth Flow
    */
   export interface OAuthFlowAuthorizationCode extends SpecificationExtension {
-    /** The authorization URL to be used for this flow. This MUST be in the form of a URL. */
+    /**
+     * The authorization URL to be used for this flow. This MUST be in the form
+     * of a URL.
+     */
     authorizationUrl: string;
-    /** The token URL to be used for this flow. This MUST be in the form of a URL. */
+    /**
+     * The token URL to be used for this flow. This MUST be in the form of a
+     * URL.
+     */
     tokenUrl: string;
-    /** The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. */
+    /**
+     * The URL to be used for obtaining refresh tokens. This MUST be in the
+     * form of a URL.
+     */
     refreshUrl?: string;
-    /** The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty. */
+    /**
+     * The available scopes for the OAuth2 security scheme. A map between the
+     * scope name and a short description for it. The map MAY be empty.
+     */
     scopes: { [scope: string]: string };
   }
 
@@ -981,11 +1212,20 @@ export namespace OpenAPIV3_0 {
    * Defines an OpenID Connect security scheme.
    */
   export interface OpenIdConnectSecurityScheme extends SpecificationExtension {
-    /** The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect". */
+    /**
+     * The type of the security scheme. Valid values are "apiKey", "http",
+     * "oauth2", "openIdConnect".
+     */
     type: "openIdConnect";
-    /** A short description for security scheme. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description for security scheme. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description?: string;
-    /** OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL. */
+    /**
+     * OpenId Connect URL to discover OAuth2 configuration values. This MUST be
+     * in the form of a URL.
+     */
     openIdConnectUrl: string;
   }
 
@@ -995,11 +1235,18 @@ export namespace OpenAPIV3_0 {
    * Adds metadata to a single tag that is used by the Operation Object. It is not mandatory to have a Tag Object per tag defined in the Operation Object instances.
    */
   export interface TagObject extends SpecificationExtension {
-    /** The name of the tag. */
+    /**
+     * The name of the tag.
+     */
     name: string;
-    /** A short description for the tag. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description for the tag. CommonMark syntax MAY be used for rich
+     * text representation.
+     */
     description?: string;
-    /** Additional external documentation for this tag. */
+    /**
+     * Additional external documentation for this tag.
+     */
     externalDocs?: ExternalDocumentationObject;
   }
 }
