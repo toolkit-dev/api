@@ -390,10 +390,13 @@ export namespace OpenAPIV3_0 {
   /**
    * Header Object
    *
-   * The Header Object follows the structure of the Parameter Object with the following changes:
-   * 1. name MUST NOT be specified, it is given in the corresponding headers map.
+   * The Header Object follows the structure of the Parameter Object with the
+   * following changes:
+   * 1. name MUST NOT be specified, it is given in the corresponding headers
+   *    map.
    * 2. in MUST NOT be specified, it is implicitly in header.
-   * 3. All traits that are affected by the location MUST be applicable to a location of header (for example, style).
+   * 3. All traits that are affected by the location MUST be applicable to a
+   *    location of header (for example, style).
    */
   export type HeaderObject = Omit<ParameterBaseObject, "allowEmptyValue">;
 
@@ -487,7 +490,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Media Type Object
    *
-   * Each Media Type Object provides schema and examples for the media type identified by its key.
+   * Each Media Type Object provides schema and examples for the media type
+   * identified by its key.
    */
   export interface MediaTypeObject extends SpecificationExtension {
     /**
@@ -551,7 +555,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Responses Object
    *
-   * A container for the expected responses of an operation. The container maps a HTTP response code to the expected response.
+   * A container for the expected responses of an operation. The container maps
+   * a HTTP response code to the expected response.
    */
   export type ResponsesObject = SpecificationExtension & {
     default?: ReferenceObject | ResponseObject;
@@ -560,7 +565,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Response Object
    *
-   * Describes a single response from an API Operation, including design-time, static links to operations based on the response.
+   * Describes a single response from an API Operation, including design-time,
+   * static links to operations based on the response.
    */
   export interface ResponseObject extends SpecificationExtension {
     /**
@@ -588,7 +594,9 @@ export namespace OpenAPIV3_0 {
   /**
    * Callback Object
    *
-   * A map of possible out-of band callbacks related to the parent operation. Each value in the map is a Path Item Object that describes a request that may be initiated by the API provider and the expected responses.
+   * A map of possible out-of band callbacks related to the parent operation.
+   * Each value in the map is a Path Item Object that describes a request that
+   * may be initiated by the API provider and the expected responses.
    */
   export interface CallbackObject extends SpecificationExtension {
     /**
@@ -601,7 +609,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Example Object
    *
-   * In all cases, the example value is expected to be compatible with the type schema of its associated value.
+   * In all cases, the example value is expected to be compatible with the
+   * type schema of its associated value.
    */
   export interface ExampleObject extends SpecificationExtension {
     /**
@@ -629,7 +638,10 @@ export namespace OpenAPIV3_0 {
   /**
    * Link Object
    *
-   * The Link object represents a possible design-time link for a response. The presence of a link does not guarantee the caller's ability to successfully invoke it, rather it provides known metadata and structure for a response.
+   * The Link object represents a possible design-time link for a response.
+   * The presence of a link does not guarantee the caller's ability to
+   * successfully invoke it, rather it provides known metadata and structure
+   * for a response.
    */
   export interface LinkObject extends SpecificationExtension {
     /**
@@ -667,7 +679,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Reference Object
    *
-   * A simple object to allow referencing other components in the specification, internally and externally.
+   * A simple object to allow referencing other components in the
+   * specification, internally and externally.
    */
   export interface ReferenceObject extends SpecificationExtension {
     /**
@@ -679,14 +692,16 @@ export namespace OpenAPIV3_0 {
   /**
    * Schema Object
    *
-   * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays.
+   * The Schema Object allows the definition of input and output data types.
+   * These types can be objects, but also primitives and arrays.
    */
   export type SchemaObject = NonArraySchemaObject | ArraySchemaObject;
 
   /**
    * Base Schema Object
    *
-   * Common properties for all schema objects, based on JSON Schema Draft 7 with OpenAPI-specific extensions.
+   * Common properties for all schema objects, based on JSON Schema Draft 7
+   * with OpenAPI-specific extensions.
    */
   export interface BaseSchemaObject extends SpecificationExtension {
     /**
@@ -889,7 +904,9 @@ export namespace OpenAPIV3_0 {
   /**
    * Discriminator Object
    *
-   * When request bodies or response payloads may be one of a number of different schemas, a discriminator object can be used to aid in serialization, deserialization, and validation.
+   * When request bodies or response payloads may be one of a number of
+   * different schemas, a discriminator object can be used to aid in
+   * serialization, deserialization, and validation.
    */
   export interface DiscriminatorObject extends SpecificationExtension {
     /**
@@ -939,7 +956,9 @@ export namespace OpenAPIV3_0 {
   /**
    * Security Requirement Object
    *
-   * Lists the required security schemes to execute this operation. The object can have multiple security schemes declared in it which are all required (that is, there is a logical AND between the schemes).
+   * Lists the required security schemes to execute this operation. The object
+   * can have multiple security schemes declared in it which are all required
+   * (that is, there is a logical AND between the schemes).
    */
   export interface SecurityRequirementObject extends SpecificationExtension {
     /**
@@ -952,7 +971,10 @@ export namespace OpenAPIV3_0 {
   /**
    * Components Object
    *
-   * Holds a set of reusable objects for different aspects of the OAS. All objects defined within the components object will have no effect on the API unless they are explicitly referenced from properties outside the components object.
+   * Holds a set of reusable objects for different aspects of the OAS. All
+   * objects defined within the components object will have no effect on the
+   * API unless they are explicitly referenced from properties outside the
+   * components object.
    */
   export interface ComponentsObject extends SpecificationExtension {
     /**
@@ -996,7 +1018,11 @@ export namespace OpenAPIV3_0 {
   /**
    * Security Scheme Object
    *
-   * Defines a security scheme that can be used by the operations. Supported schemes are HTTP authentication, an API key (either as a header, a cookie parameter or as a query parameter), OAuth2's common flows (implicit, password, client credentials and authorization code) as defined in RFC6749, and OpenID Connect Discovery.
+   * Defines a security scheme that can be used by the operations. Supported
+   * schemes are HTTP authentication, an API key (either as a header, a cookie
+   * parameter or as a query parameter), OAuth2's common flows (implicit,
+   * password, client credentials and authorization code) as defined in
+   * RFC6749, and OpenID Connect Discovery.
    */
   export type SecuritySchemeObject =
     | ApiKeySecurityScheme
@@ -1232,7 +1258,9 @@ export namespace OpenAPIV3_0 {
   /**
    * Tag Object
    *
-   * Adds metadata to a single tag that is used by the Operation Object. It is not mandatory to have a Tag Object per tag defined in the Operation Object instances.
+   * Adds metadata to a single tag that is used by the Operation Object. It is
+   * not mandatory to have a Tag Object per tag defined in the Operation
+   * Object instances.
    */
   export interface TagObject extends SpecificationExtension {
     /**
