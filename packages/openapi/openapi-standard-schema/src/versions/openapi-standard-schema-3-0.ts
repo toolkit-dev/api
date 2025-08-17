@@ -353,9 +353,15 @@ export namespace OpenAPIV3_0 {
    * Allows referencing an external document for extended documentation.
    */
   export interface ExternalDocumentationObject extends SpecificationExtension {
-    /** A short description of the target documentation. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description of the target documentation. CommonMark syntax
+     * MAY be used for rich text representation.
+     */
     description?: string;
-    /** The URL for the target documentation. Value MUST be in the format of a URL. */
+    /**
+     * The URL for the target documentation. Value MUST be in the format
+     * of a URL.
+     */
     url: string;
   }
 
@@ -365,11 +371,19 @@ export namespace OpenAPIV3_0 {
    * Describes a single operation parameter.
    */
   export interface ParameterObject extends ParameterBaseObject {
-    /** The name of the parameter. Parameter names are case sensitive. */
+    /**
+     * The name of the parameter. Parameter names are case sensitive.
+     */
     name: string;
-    /** The location of the parameter. Possible values are "query", "header", "path" or "cookie". */
+    /**
+     * The location of the parameter. Possible values are "query", "header",
+     * "path" or "cookie".
+     */
     in: "query" | "header" | "path" | "cookie";
-    /** Determines whether this parameter is mandatory. If the parameter location is "path", this property is required and its value MUST be true. */
+    /**
+     * Determines whether this parameter is mandatory. If the parameter
+     * location is "path", this property is required and its value MUST be true.
+     */
     required?: boolean;
   }
 
@@ -389,13 +403,25 @@ export namespace OpenAPIV3_0 {
    * Common properties shared between Parameter and Header objects.
    */
   export interface ParameterBaseObject extends SpecificationExtension {
-    /** A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A brief description of the parameter. This could contain examples of use.
+     * CommonMark syntax MAY be used for rich text representation.
+     */
     description?: string;
-    /** Specifies that a parameter is deprecated and SHOULD be transitioned out of usage. */
+    /**
+     * Specifies that a parameter is deprecated and SHOULD be transitioned
+     * out of usage.
+     */
     deprecated?: boolean;
-    /** Sets the ability to pass empty-valued parameters. This is valid only for query parameters and allows sending a parameter with an empty value. */
+    /**
+     * Sets the ability to pass empty-valued parameters. This is valid only for
+     * query parameters and allows sending a parameter with an empty value.
+     */
     allowEmptyValue?: boolean;
-    /** Describes how the parameter value will be serialized depending on the type of the parameter value. */
+    /**
+     * Describes how the parameter value will be serialized depending on the
+     * type of the parameter value.
+     */
     style?:
       | "matrix"
       | "label"
@@ -404,17 +430,32 @@ export namespace OpenAPIV3_0 {
       | "spaceDelimited"
       | "pipeDelimited"
       | "deepObject";
-    /** When this is true, parameter values of type array or object generate separate parameters for each value of the array or key-value pair of the map. */
+    /**
+     * When this is true, parameter values of type array or object generate
+     * separate parameters for each value of the array or key-value pair of
+     * the map.
+     */
     explode?: boolean;
-    /** Determines whether the parameter value SHOULD allow reserved characters, as defined by RFC3986. */
+    /**
+     * Determines whether the parameter value SHOULD allow reserved characters,
+     * as defined by RFC3986.
+     */
     allowReserved?: boolean;
-    /** The schema defining the type used for the parameter. */
+    /**
+     * The schema defining the type used for the parameter.
+     */
     schema?: ReferenceObject | SchemaObject;
     /** Example of the parameter's potential value. */
     example?: any;
-    /** Examples of the parameter's potential value. Each example SHOULD contain a value in the correct format as specified in the parameter encoding. */
+    /**
+     * Examples of the parameter's potential value. Each example SHOULD contain
+     * a value in the correct format as specified in the parameter encoding.
+     */
     examples?: { [name: string]: ReferenceObject | ExampleObject };
-    /** A map containing the representations for the parameter. The key is the media type and the value describes it. */
+    /**
+     * A map containing the representations for the parameter. The key is the
+     * media type and the value describes it.
+     */
     content?: { [media: string]: MediaTypeObject };
   }
 
@@ -424,11 +465,20 @@ export namespace OpenAPIV3_0 {
    * Describes a single request body.
    */
   export interface RequestBodyObject extends SpecificationExtension {
-    /** A brief description of the request body. This could contain examples of use. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A brief description of the request body. This could contain examples of
+     * use. CommonMark syntax MAY be used for rich text representation.
+     */
     description?: string;
-    /** The content of the request body. The key is a media type or media type range and the value describes it. */
+    /**
+     * The content of the request body. The key is a media type or media type
+     * range and the value describes it.
+     */
     content: { [media: string]: MediaTypeObject };
-    /** Determines if the request body is required in the request. Defaults to false. */
+    /**
+     * Determines if the request body is required in the request. Defaults
+     * to false.
+     */
     required?: boolean;
   }
 
@@ -438,13 +488,21 @@ export namespace OpenAPIV3_0 {
    * Each Media Type Object provides schema and examples for the media type identified by its key.
    */
   export interface MediaTypeObject extends SpecificationExtension {
-    /** The schema defining the content of the request, response, or parameter. */
+    /**
+     * The schema defining the content of the request, response, or parameter.
+     */
     schema?: ReferenceObject | SchemaObject;
     /** Example of the media type. */
     example?: any;
-    /** Examples of the media type. Each example object SHOULD match the media type and specified schema if present. */
+    /**
+     * Examples of the media type. Each example object SHOULD match the media
+     * type and specified schema if present.
+     */
     examples?: { [name: string]: ReferenceObject | ExampleObject };
-    /** A map between a property name and its encoding information. The key, being the property name, MUST exist in the schema as a property. */
+    /**
+     * A map between a property name and its encoding information. The key,
+     * being the property name, MUST exist in the schema as a property.
+     */
     encoding?: { [name: string]: EncodingObject };
   }
 
@@ -454,15 +512,30 @@ export namespace OpenAPIV3_0 {
    * A single encoding definition applied to a single schema property.
    */
   export interface EncodingObject extends SpecificationExtension {
-    /** The Content-Type for encoding a specific property. Default value depends on the property type. */
+    /**
+     * The Content-Type for encoding a specific property. Default value depends
+     * on the property type.
+     */
     contentType?: string;
-    /** A map allowing additional information to be provided as headers. */
+    /**
+     * A map allowing additional information to be provided as headers.
+     */
     headers?: { [header: string]: ReferenceObject | HeaderObject };
-    /** Describes how a specific property value will be serialized depending on its type. */
+    /**
+     * Describes how a specific property value will be serialized depending
+     * on its type.
+     */
     style?: string;
-    /** When this is true, property values of type array or object generate separate parameters for each value of the array, or key-value-pair of the map. */
+    /**
+     * When this is true, property values of type array or object generate
+     * separate parameters for each value of the array, or key-value-pair
+     * of the map.
+     */
     explode?: boolean;
-    /** Determines whether the parameter value SHOULD allow reserved characters, as defined by RFC3986. */
+    /**
+     * Determines whether the parameter value SHOULD allow reserved characters,
+     * as defined by RFC3986.
+     */
     allowReserved?: boolean;
   }
 
@@ -484,13 +557,25 @@ export namespace OpenAPIV3_0 {
    * Describes a single response from an API Operation, including design-time, static links to operations based on the response.
    */
   export interface ResponseObject extends SpecificationExtension {
-    /** A short description of the response. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * A short description of the response. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description: string;
-    /** Maps a header name to its definition. RFC7230 states header names are case insensitive. */
+    /**
+     * Maps a header name to its definition. RFC7230 states header names
+     * are case insensitive.
+     */
     headers?: { [header: string]: ReferenceObject | HeaderObject };
-    /** A map containing descriptions of potential response payloads. The key is a media type or media type range and the value describes it. */
+    /**
+     * A map containing descriptions of potential response payloads. The key
+     * is a media type or media type range and the value describes it.
+     */
     content?: { [media: string]: MediaTypeObject };
-    /** A map of operations links that can be followed from the response. The key of the map is a short name for the link. */
+    /**
+     * A map of operations links that can be followed from the response.
+     * The key of the map is a short name for the link.
+     */
     links?: { [link: string]: ReferenceObject | LinkObject };
   }
 
@@ -500,7 +585,10 @@ export namespace OpenAPIV3_0 {
    * A map of possible out-of band callbacks related to the parent operation. Each value in the map is a Path Item Object that describes a request that may be initiated by the API provider and the expected responses.
    */
   export interface CallbackObject extends SpecificationExtension {
-    /** A Path Item Object used to define a callback request and expected responses. */
+    /**
+     * A Path Item Object used to define a callback request and expected
+     * responses.
+     */
     [expression: string]: PathItemObject;
   }
 
@@ -512,7 +600,10 @@ export namespace OpenAPIV3_0 {
   export interface ExampleObject extends SpecificationExtension {
     /** Short description for the example. */
     summary?: string;
-    /** Long description for the example. CommonMark syntax MAY be used for rich text representation. */
+    /**
+     * Long description for the example. CommonMark syntax MAY be used
+     * for rich text representation.
+     */
     description?: string;
     /** Embedded literal example. The value field and externalValue field are mutually exclusive. */
     value?: any;
