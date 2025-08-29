@@ -3,20 +3,40 @@
     nixpkgs.url = "github:NixOS/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs { inherit system;};
-        in
-        with pkgs;
-        {
-          devShells.default = mkShell {
-            buildInputs = [
-              nodejs_20
-              nodejs_20.pkgs.pnpm
-            ];
-          };
-        }
-      );
+
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+
+        devTools = pkgs.buildEnv {
+          name = "dev-tools";
+          paths = [
+            pkgs.alejandra
+            pkgs.colima
+          ];
+        };
+
+        commonTools = pkgs.buildEnv {
+          name = "common-tools";
+          paths = [
+            pkgs.nodejs_22
+            pkgs.pnpm_10
+          ];
+        };
+      in {
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
+            devTools
+            commonTools
+          ];
+        };
+      }
+    );
 }

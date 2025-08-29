@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "nix.formatterPath": "alejandra",
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  }
+}
