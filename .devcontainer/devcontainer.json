@@ -1,6 +1,9 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
   "name": "Toolkit devcontainer",
-  "image": "ghcr.io/devtemplates/niximage:0.1.3-ubuntu-22.04"
+  "image": "ghcr.io/devtemplates/nix-devcontainer:1.0.1-ubuntu-22.04",
+  "postCreateCommand": "/usr/local/share/entrypoint.sh nix develop --command pnpm install",
+  "postStartCommand": "bash /usr/local/share/nix-daemon-start.sh",
+  "containerEnv": {
+    "DIRENV_LOG_FORMAT": ""
+  }
 }
