@@ -24,6 +24,9 @@ jobs:
   # The job MUST be called `copilot-setup-steps` to get picked up by Copilot.
   copilot-setup-steps:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     # container:
     #   image: ghcr.io/devtemplates/nix-devcontainer:1.0.1-ubuntu-22.04
     #   options: --user runner
@@ -55,5 +58,33 @@ jobs:
             direnv allow
           fi
 
+      - name: Create bash wrapper for Nix environment
+        run: |
+          # Move original bash to a new location
+          sudo mv /usr/bin/bash /usr/bin/bash-original
+
+          # Create wrapper script
+          sudo tee /usr/bin/bash << 'EOF'
+          #!/usr/bin/bash-original
+
+          # Check if we've already sourced the nix environment
+          if [[ -z "$DIRENV_HOOKED" ]]; then
+            export DIRENV_HOOKED=1
+
+            # Source the nix development environment using absolute path
+            if command -v nix >/dev/null 2>&1; then
+              eval "$(direnv hook bash)"
+            fi
+          fi
+
+          # Execute the original bash with all arguments
+          exec /usr/bin/bash-original "$@"
+          EOF
+
+          # Make the wrapper executable
+          sudo chmod +x /usr/bin/bash
+
       - name: Install dependencies
-        run: nix develop --command pnpm install
+        run: |
+          cd /home/runner/work/api/api
+          pnpm install
