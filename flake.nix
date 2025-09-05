@@ -15,27 +15,17 @@
           inherit system;
         };
 
-        devTools = pkgs.buildEnv {
-          name = "dev-tools";
-          paths = [
-            pkgs.alejandra
-            pkgs.colima
-          ];
-        };
+        devTools = [
+          pkgs.alejandra
+        ];
 
-        commonTools = pkgs.buildEnv {
-          name = "common-tools";
-          paths = [
-            pkgs.nodejs_22
-            pkgs.pnpm_10
-          ];
-        };
+        commonTools = [
+          pkgs.nodejs_22
+          pkgs.pnpm_10
+        ];
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            devTools
-            commonTools
-          ];
+          buildInputs = devTools ++ commonTools;
         };
       }
     );
