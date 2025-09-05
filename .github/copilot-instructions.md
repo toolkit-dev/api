@@ -17,31 +17,32 @@ This repository is **Toolkit** - a TypeScript library that provides everything n
 
 ### Prerequisites
 
-This repository requires Nix for development environment management. **Always use Nix** - do not attempt to install dependencies directly.
+This repository requires Nix for development environment management. Nix will be provided by the hosting environment - do not attempt to install it yourself.
 
 ### Bootstrap Process
 
-1. **Install Nix** (if not available):
-
+1. **Start development environment:**
    ```bash
-   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
-   source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+   nix develop
    ```
+   - Wait for shell prompt to show `(nix:nix-shell-env)` prefix
+   - Takes 30-90 seconds on first run to download and configure environment
+   - Provides Node.js 22, pnpm 10, and all development tools
 
-2. **Install dependencies** (ALWAYS run this first):
+2. **Install dependencies** (run within nix develop session):
    ```bash
-   nix develop --command pnpm install
+   pnpm install
    ```
-   - This must be run inside `nix develop` context
    - Takes ~30-60 seconds on first run
    - Creates node_modules and sets up husky git hooks
+   - Must be run within the nix develop environment
 
 ### Build Commands
 
 **Compile TypeScript** (required before running most commands):
 
 ```bash
-nix develop --command pnpm -r run compile
+pnpm -r run compile
 ```
 
 - Compiles all packages in dependency order
@@ -51,7 +52,7 @@ nix develop --command pnpm -r run compile
 **Lint code:**
 
 ```bash
-nix develop --command pnpm run lint
+pnpm run lint
 ```
 
 - Uses ESLint with neostandard config
@@ -60,7 +61,7 @@ nix develop --command pnpm run lint
 **Format code:**
 
 ```bash
-nix develop --command pnpm run format
+pnpm run format
 ```
 
 - Uses Prettier for code formatting
@@ -69,7 +70,7 @@ nix develop --command pnpm run format
 **Run tests:**
 
 ```bash
-nix develop --command pnpm run test
+pnpm run test
 ```
 
 - Currently returns "No tests specified" (tests are at package level)
@@ -78,9 +79,9 @@ nix develop --command pnpm run test
 **Clean build artifacts:**
 
 ```bash
-nix develop --command pnpm run clean        # Clean all
-nix develop --command pnpm run clean:cache  # Clean dist folders only
-nix develop --command pnpm run clean:deps   # Clean node_modules only
+pnpm run clean        # Clean all
+pnpm run clean:cache  # Clean dist folders only
+pnpm run clean:deps   # Clean node_modules only
 ```
 
 ### Development Workflow
@@ -88,7 +89,7 @@ nix develop --command pnpm run clean:deps   # Clean node_modules only
 **Start development server:**
 
 ```bash
-nix develop --command pnpm run dev
+pnpm run dev
 ```
 
 - Runs turbowatch for file watching and TypeScript compilation
@@ -98,7 +99,7 @@ nix develop --command pnpm run dev
 **Run specific package commands:**
 
 ```bash
-nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
+pnpm --filter @toolkit-dev/examples-backend run start
 ```
 
 ### Time Requirements
@@ -162,24 +163,25 @@ packages/
 
 ### Making Changes
 
-1. **Always start with:** `nix develop --command pnpm install`
-2. **Compile before testing:** `nix develop --command pnpm -r run compile`
-3. **Lint frequently:** Code must pass `nix develop --command pnpm run lint`
-4. **Test specific packages:** Use `--filter` flag with pnpm commands
-5. **Pre-commit hooks will run:** Prettier and ESLint automatically on commit
+1. **Start development environment:** `nix develop`
+2. **Install dependencies:** `pnpm install`
+3. **Compile before testing:** `pnpm -r run compile`
+4. **Lint frequently:** Code must pass `pnpm run lint`
+5. **Test specific packages:** Use `--filter` flag with pnpm commands
+6. **Pre-commit hooks will run:** Prettier and ESLint automatically on commit
 
 ### Common Issues and Workarounds
 
 - **Build failures in react-query-fetch:** Known module resolution issue, ignore if other packages compile
-- **Husky pre-commit failures:** Ensure `pnpm install` was run in nix develop context
-- **Missing dependencies:** Always run commands within `nix develop --command`
+- **Husky pre-commit failures:** Ensure `pnpm install` was run in nix develop environment
+- **Missing dependencies:** Always run commands within nix develop session
 - **Git tree dirty warnings:** Expected during development, ignore unless blocking
 
 ### Validation Steps
 
-- **Lint check:** `nix develop --command pnpm run lint` must pass
-- **Type check:** `nix develop --command pnpm -r run compile` should mostly succeed
-- **Example server:** `nix develop --command pnpm --filter @toolkit-dev/examples-backend run start` should start on port 3000
+- **Lint check:** `pnpm run lint` must pass
+- **Type check:** `pnpm -r run compile` should mostly succeed
+- **Example server:** `pnpm --filter @toolkit-dev/examples-backend run start` should start on port 3000
 
 ### Key Dependencies
 
@@ -194,3 +196,16 @@ packages/
 - **Workspace dependencies:** Packages use `workspace:*` for internal dependencies
 - **ESM only:** All packages are ESM modules (`"type": "module"`)
 - **Monorepo structure:** Changes may affect multiple packages, test accordingly
+
+## For AI Coding Agents
+
+**See `AGENTS.md` for detailed guidance on working with this repository as an AI agent.** Key points:
+
+- Use persistent `nix develop` sessions instead of prefixing commands
+- Wait for environment to load (look for `(nix:nix-shell-env)` prompt)
+- Never attempt to install Nix yourself - it's provided by the hosting environment
+- Use `write_bash` to send commands to the persistent session
+
+<tool_calling>
+You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
+</tool_calling>
