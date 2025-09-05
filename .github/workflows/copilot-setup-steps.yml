@@ -24,15 +24,18 @@ jobs:
   # The job MUST be called `copilot-setup-steps` to get picked up by Copilot.
   copilot-setup-steps:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/devtemplates/nix-devcontainer:1.0.1-ubuntu-22.04
-      options: --user runner
+    # container:
+    #   image: ghcr.io/devtemplates/nix-devcontainer:1.0.1-ubuntu-22.04
+    #   options: --user runner
 
     # You can define any steps you want, and they will run before the agent starts.
     # If you do not check out your code, Copilot will do this for you.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
       - name: Install dependencies
         run: nix develop --command pnpm install
