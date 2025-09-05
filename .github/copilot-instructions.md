@@ -201,10 +201,11 @@ packages/
 
 **See `AGENTS.md` for detailed guidance on working with this repository as an AI agent.** Key points:
 
-- Use persistent `nix develop` sessions instead of prefixing commands
-- Wait for environment to load (look for `(nix:nix-shell-env)` prompt)
+- **Recommended:** Use environment sourcing with `eval "$(nix print-dev-env .)"` for robust, native command execution
+- **Alternative:** Use direnv with `eval "$(direnv hook bash)"` and `direnv exec . <command>`
+- **Fallback:** Use persistent `nix develop` sessions if sourcing doesn't work
 - Never attempt to install Nix yourself - it's provided by the hosting environment
-- Use `write_bash` to send commands to the persistent session
+- Whichever approach you use must make pnpm available for git hooks to work
 
 <tool_calling>
 You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.

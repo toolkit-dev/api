@@ -6,67 +6,107 @@ This document provides specific guidance for AI coding agents working with this 
 
 This repository uses Nix for environment management. **Do not assume Nix is available** - it will be provided by the hosting environment.
 
-### Starting a Development Session
+## Recommended Approach: Environment Sourcing
 
-1. **Start a persistent nix develop session:**
-   ```bash
-   # Use bash tool with async=true
-   nix develop
-   ```
+The most robust approach is to source the Nix environment variables into your current shell. This provides native command execution without session management overhead.
 
-2. **Wait for the environment to load:**
-   - Nix develop takes 30-90 seconds to initialize on first run
-   - Wait for the shell prompt to show `(nix:nix-shell-env)` prefix
-   - This indicates the environment is ready with Node.js, pnpm, and all tools available
+### Method 1: Nix Print Dev Environment (Recommended)
 
-3. **Verify environment is ready:**
-   ```bash
-   # Send this command to verify tools are available
-   echo "Environment ready" && node --version && pnpm --version
-   ```
+```bash
+# Load environment once at the start of your workflow
+eval "$(nix print-dev-env .)"
 
-### Development Workflow
+# Now run commands natively - no prefixes needed!
+pnpm install
+pnpm run lint
+git commit -m "changes"  # Git hooks work perfectly
+```
 
-**Use persistent session for all commands:**
-- Start one `nix develop` session using `bash` tool with `async=true`
-- Use `write_bash` to send all subsequent commands to the same session
-- This ensures pnpm, Node.js, and git hooks work correctly
-- Avoids the need to prefix every command with `nix develop --command`
+**Benefits:**
+- ✅ **Fast and reliable:** Environment loads in 2-3 seconds vs 30-90 seconds
+- ✅ **Clean command output:** No session clutter or async session management
+- ✅ **Native execution:** Commands run exactly as if in a normal shell
+- ✅ **Git hooks work:** pnpm is available when husky triggers pre-commit hooks
+- ✅ **Platform independent:** Works reliably across different agent environments
+- ✅ **Robust:** Uses official Nix command designed for this purpose
 
-**Example workflow:**
+### Method 2: Direnv (Alternative)
+
+If you prefer direnv, it's now available in the environment:
+
+```bash
+# Setup direnv hook (only needed once)
+eval "$(direnv hook bash)"
+
+# Allow this directory (if not already done)
+direnv allow .
+
+# Run commands with direnv exec
+direnv exec . pnpm install
+direnv exec . pnpm run lint
+direnv exec . git commit -m "changes"
+```
+
+### Environment Loading Function
+
+Create a helper function for consistent environment loading:
+
+```bash
+# Helper function for loading Nix environment
+load_nix_env() {
+    eval "$(nix print-dev-env .)"
+    echo "Nix environment loaded - Node.js $(node --version), pnpm $(pnpm --version)"
+}
+
+# Usage
+load_nix_env
+pnpm install
+pnpm run lint
+```
+
+## Fallback: Persistent Sessions
+
+If environment sourcing doesn't work in your specific agent environment, fall back to persistent sessions:
+
 ```bash
 # Step 1: Start persistent session
 bash(async=true): nix develop
 
-# Step 2: Wait for environment (look for (nix:nix-shell-env) prompt)
-# Step 3: Install dependencies
-write_bash: pnpm install
+# Step 2: Wait for environment (look for (nix:nix-shell-env) prompt) 
+# This takes 30-90 seconds on first run
 
-# Step 4: Run development commands
+# Step 3: Send commands to session
+write_bash: pnpm install
 write_bash: pnpm run lint
-write_bash: pnpm -r run compile
-write_bash: git status
+write_bash: git commit -m "changes"
 ```
 
-### Key Benefits of Persistent Sessions
+## Verification and Testing
 
-- **Git hooks work correctly:** pnpm is available when git commits trigger husky hooks
-- **No command prefixing:** Avoid tedious `nix develop --command` prefixes
-- **Better performance:** Environment loads once, not per command
-- **Interactive tools:** Supports interactive commands and debugging
+Always verify the environment is working:
 
-### Environment Detection
+```bash
+# Test that required tools are available
+node --version    # Should show v22.18.0
+pnpm --version    # Should show 10.15.0
+git --version     # Should work
+npx --version     # Should work
 
-The nix develop environment is ready when you see:
-- Shell prompt contains `(nix:nix-shell-env)`
-- Commands like `node --version` and `pnpm --version` work
-- Tools like git, typescript compiler are available
+# Test git hooks work
+echo "test" > test.txt
+git add test.txt
+git commit -m "test commit"  # Should trigger husky hooks successfully
+git reset --soft HEAD~1     # Undo test commit
+git reset HEAD test.txt      # Unstage test file
+rm test.txt                  # Clean up
+```
 
-### Important Notes
+## Important Notes
 
 - **Never install Nix yourself** - The hosting environment provides it
-- **Use one persistent session** - Don't start multiple nix develop sessions
-- **Wait for initialization** - Give nix develop adequate time to load
-- **Test environment readiness** - Verify tools are available before proceeding
+- **Environment sourcing is preferred** - It's faster, cleaner, and more reliable
+- **Use persistent sessions only as fallback** - When sourcing doesn't work
+- **Test environment before proceeding** - Verify tools are available
+- **Git hooks requirement** - Whichever method you use must make pnpm available for husky
 
-This approach resolves issues with git hooks and provides a much smoother development experience.
+This approach provides the robust, native command execution the repository requires while avoiding the complexity of session management.
