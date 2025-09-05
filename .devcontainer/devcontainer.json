@@ -1,7 +1,7 @@
 {
   "name": "Toolkit devcontainer",
   "image": "ghcr.io/devtemplates/nix-devcontainer:1.0.1-ubuntu-22.04",
-  "postCreateCommand": "/usr/local/share/entrypoint.sh nix develop --command pnpm install",
+  "updateContentCommand": "/usr/local/share/entrypoint.sh nix develop --command pnpm install",
   "postStartCommand": "bash /usr/local/share/nix-daemon-start.sh",
   "containerEnv": {
     "DIRENV_LOG_FORMAT": ""
