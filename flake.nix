@@ -25,7 +25,7 @@
         ];
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = devTools ++ commonTools;
+          packages = devTools ++ commonTools;
         };
       }
     );
