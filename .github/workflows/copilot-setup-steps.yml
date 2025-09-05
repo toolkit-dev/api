@@ -37,5 +37,23 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Install direnv and nix-direnv
+        run: |
+          nix profile install nixpkgs#direnv nixpkgs#nix-direnv
+          # Configure direnv to use nix-direnv
+          mkdir -p ~/.config/direnv
+          echo 'source $HOME/.nix-profile/share/nix-direnv/direnvrc' > ~/.config/direnv/direnvrc
+
+      - name: Setup direnv hook
+        run: |
+          # Add direnv hook to bashrc for future interactive sessions
+          echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+
+      - name: Allow direnv (if .envrc exists)
+        run: |
+          if [ -f .envrc ]; then
+            direnv allow
+          fi
+
       - name: Install dependencies
         run: nix develop --command pnpm install
