@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------------- */
 
 // toolkit
-import { HttpError } from "@toolkit-dev/openapi-core/http-error";
+import { HttpError } from "@toolkit-dev/openapi-client-fetch";
 
 /* -----------------------------------------------------------------------------
  * constants
