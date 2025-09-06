@@ -46,7 +46,6 @@ nix develop --command pnpm -r run compile
 ```
 
 - Compiles all packages in dependency order
-- Some packages may fail (known issue with react-query-fetch module resolution)
 - Most packages compile successfully and this is expected
 
 **Lint code:**
@@ -102,38 +101,16 @@ nix develop --command pnpm run dev
 nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
 ```
 
-### Time Requirements
 
-- `pnpm install`: 30-60 seconds
-- `pnpm -r run compile`: 60-120 seconds
-- `pnpm run lint`: 10-20 seconds
-- Development server startup: 10-15 seconds
 
 ## Project Architecture and Layout
 
 ### Package Structure
 
-```
-packages/
-├── examples/
-│   ├── backend/          # Hono-based API server example
-│   └── frontend/         # Frontend example (if exists)
-├── jsonapi/
-│   ├── jsonapi-parser/   # JSON:API parsing utilities
-│   ├── jsonapi-serializer/ # JSON:API serialization
-│   ├── jsonapi-types/    # TypeScript types for JSON:API
-│   └── jsonapi-zod/      # Zod schemas for JSON:API
-├── openapi/
-│   ├── openapi-client-fetch/   # OpenAPI client using fetch
-│   ├── openapi-core/           # Core OpenAPI utilities
-│   ├── openapi-document-zod/   # Zod schemas for OpenAPI docs
-│   ├── openapi-server-hono/    # Hono integration for OpenAPI
-│   └── openapi-standard-schema/ # Standard schema support
-├── react-query/
-│   ├── react-query-fetch/   # React Query + fetch integration
-│   └── react-query-jsonapi/ # React Query + JSON:API
-└── runtime/
-    └── errors/             # Runtime error utilities
+To see the current package structure:
+
+```bash
+nix develop --command find packages -name "package.json" -exec dirname {} \;
 ```
 
 ### Key Configuration Files
@@ -171,7 +148,6 @@ packages/
 
 ### Common Issues and Workarounds
 
-- **Build failures in react-query-fetch:** Known module resolution issue, ignore if other packages compile
 - **Husky pre-commit failures:** Ensure commands use `nix develop --command` prefix
 - **Missing dependencies:** Always use `nix develop --command` prefix for all commands
 - **Git tree dirty warnings:** Expected during development, ignore unless blocking
@@ -179,14 +155,10 @@ packages/
 ### Validation Steps
 
 - **Lint check:** `nix develop --command pnpm run lint` must pass
-- **Type check:** `nix develop --command pnpm -r run compile` should mostly succeed
+- **Type check:** `nix develop --command pnpm -r run compile` must pass
 - **Example server:** `nix develop --command pnpm --filter @toolkit-dev/examples-backend run start` should start on port 3000
 
-### Key Dependencies
 
-- **Runtime:** Node.js 22, Hono 4.7, Zod 3.24, OpenAPI 3.x
-- **Development:** TypeScript 5.7, ESLint 8.57, Prettier 3.3, Vitest 3.0
-- **Build:** pnpm 10.x, Nix flakes, turbowatch 2.29
 
 ## Important Notes
 

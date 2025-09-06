@@ -23,11 +23,7 @@ nix develop --command git status
 
 ### Why This Approach
 
-After testing various automation approaches, this prefix method was determined to be:
-- **Most reliable:** Works consistently across all environments
-- **Least hacky:** No complex workarounds or environment sourcing
-- **Git hook compatible:** Ensures pnpm is available when husky runs pre-commit hooks
-- **Simple to remember:** Just prefix every command with `nix develop --command`
+This prefix method provides reliable command execution while ensuring all tools are available in the Nix environment.
 
 ### Example Workflow
 
