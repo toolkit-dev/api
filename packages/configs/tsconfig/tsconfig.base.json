@@ -1,0 +1,33 @@
+{
+  "exclude": ["${configDir}/node_modules", "${configDir}/dist"],
+  "compilerOptions": {
+    // Use modern JS features
+    "lib": ["esnext"],
+
+    // Make type loading manual and explicit
+    "types": [],
+
+    // This is required to ensure sibling deps resolve by pkg name rather than
+    // relative paths.
+    "baseUrl": "${configDir}",
+
+    // By default, module resolution should defer to package.json "type" field
+    "module": "nodenext",
+
+    // Module resolution
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+
+    // General options
+    "strict": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noErrorTruncation": true,
+    "noImplicitReturns": true,
+    "useDefineForClassFields": true
+  }
+}

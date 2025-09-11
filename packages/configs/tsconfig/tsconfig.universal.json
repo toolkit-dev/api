@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["${configDir}/src/**/*.ts", "${configDir}/src/**/*.tsx"],
+  "compilerOptions": {
+    "rootDir": "${configDir}/src",
+    "composite": true,
+
+    // Output options
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "outDir": "${configDir}/dist/esm",
+    "tsBuildInfoFile": "${configDir}/dist/esm/.tsbuildinfo",
+
+    // Language
+    "lib": ["esnext", "webworker"],
+    "target": "es2018"
+  }
+}

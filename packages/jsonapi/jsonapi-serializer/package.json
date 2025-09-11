@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/esm/index.js"
   },
   "scripts": {
     "compile": "tsc --build",
@@ -15,7 +15,7 @@
     "knex": "knex",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "pnpm lint --fix",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@jsonapi/types": "workspace:*",
@@ -23,6 +23,7 @@
     "p-props": "5.0.0"
   },
   "devDependencies": {
+    "@toolkit-dev/viteconfig": "workspace:*",
     "@types/lodash": "4.14.191",
     "@types/node": "20.14.8",
     "knex": "3.1.0",

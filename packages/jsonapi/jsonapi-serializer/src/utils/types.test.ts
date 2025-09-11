@@ -4,7 +4,7 @@
  * -------------------------------------------------------------------------- */
 
 // 3rd party
-import { test } from "vitest";
+import { test, expect } from "vitest";
 
 // lib
 import { RequireParam, ValidatedTypeParams } from "./types.js";
@@ -36,4 +36,9 @@ test("Should enforce correct types", () => {
     RequireParam<"a"> | RequireParam<never>,
     "Error"
   > = [];
+
+  expect(pass).toBeDefined();
+  expect(fail1).toBeDefined();
+  expect(fail2).toBeDefined();
+  expect(fail3).toBeDefined();
 });

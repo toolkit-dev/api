@@ -1,0 +1,32 @@
+{
+  "name": "@toolkit-dev/eslintconfig",
+  "version": "0.0.1",
+  "description": "Eslint configuration for the repo",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/esm/create-eslint-config.js"
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean:cache": "rm -rf ./dist",
+    "clean:deps": "rm -rf ./node_modules",
+    "format": "prettier --write .",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "eslint": "^8.57.0",
+    "neostandard": "^0.12.1"
+  },
+  "devDependencies": {
+    "@toolkit-dev/eslintconfig": "workspace:*",
+    "@toolkit-dev/tsconfig": "workspace:*",
+    "@types/eslint": "8.56.10",
+    "@types/node": "22.13.14",
+    "prettier": "3.3.3",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  }
+}

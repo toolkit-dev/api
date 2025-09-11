@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    "./*": "./dist/*.js"
+    "./*": "./dist/esm/*.js"
   },
   "scripts": {
     "compile": "tsc --build",
@@ -14,10 +14,11 @@
     "format": "prettier --write .",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "pnpm lint --fix",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@standard-schema/spec": "1.0.0",
+    "@toolkit-dev/viteconfig": "workspace:*",
     "hono": "4.7.0",
     "openapi3-ts": "4.4.0",
     "type-fest": "4.35.0",

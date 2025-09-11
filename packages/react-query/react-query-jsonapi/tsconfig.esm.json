@@ -1,0 +1,14 @@
+{
+  "extends": "../../configs/tsconfig/tsconfig.browser.json",
+  "references": [
+    {
+      "path": "../../jsonapi/jsonapi-types"
+    },
+    {
+      "path": "../../openapi/openapi-client-fetch"
+    },
+    {
+      "path": "../../openapi/openapi-core"
+    }
+  ]
+}
