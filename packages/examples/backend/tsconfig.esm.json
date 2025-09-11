@@ -1,0 +1,29 @@
+{
+  "extends": "../../configs/tsconfig/tsconfig.node.json",
+  "references": [
+    {
+      "path": "../../configs/viteconfig"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-serializer"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-types"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-zod"
+    },
+    {
+      "path": "../../openapi/openapi-client-fetch"
+    },
+    {
+      "path": "../../openapi/openapi-core"
+    },
+    {
+      "path": "../../openapi/openapi-document-zod"
+    },
+    {
+      "path": "../../openapi/openapi-server-hono"
+    }
+  ]
+}

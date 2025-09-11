@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/esm/index.js"
   },
   "scripts": {
     "compile": "tsc --build",
@@ -16,6 +16,8 @@
     "lint:fix": "pnpm lint --fix"
   },
   "devDependencies": {
-    "typescript": "5.7.3"
+    "@toolkit-dev/viteconfig": "workspace:*",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
   }
 }

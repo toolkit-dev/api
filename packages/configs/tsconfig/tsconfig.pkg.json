@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["${configDir}/eslint.config.ts", "${configDir}/vite.config.ts"],
+  "files": [],
+  "compilerOptions": {
+    "rootDir": "${configDir}",
+    "composite": true,
+
+    // Output options
+    "emitDeclarationOnly": true,
+    "outDir": "${configDir}/dist/pkg",
+    "tsBuildInfoFile": "${configDir}/dist/pkg/.tsbuildinfo",
+
+    // Language
+    "types": ["node"]
+  }
+}

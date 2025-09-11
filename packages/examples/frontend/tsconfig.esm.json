@@ -1,0 +1,20 @@
+{
+  "extends": "../../configs/tsconfig/tsconfig.browser.json",
+  "references": [
+    {
+      "path": "../backend"
+    },
+    {
+      "path": "../../jsonapi/jsonapi-parser"
+    },
+    {
+      "path": "../../openapi/openapi-client-fetch"
+    },
+    {
+      "path": "../../react-query/react-query-jsonapi"
+    },
+    {
+      "path": "../../react-query/react-query-fetch"
+    }
+  ]
+}

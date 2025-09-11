@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    "./client": "./dist/client.js"
+    "./client": "./dist/esm/client.js"
   },
   "scripts": {
     "compile": "tsc --build",
@@ -14,8 +14,8 @@
     "format": "prettier --write .",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "pnpm lint --fix",
-    "start": "node dist/index.js",
-    "test": "vitest"
+    "start": "node dist/esm/index.js",
+    "test": "vitest run"
   },
   "dependencies": {
     "@hono/node-server": "1.13.8",
@@ -38,6 +38,7 @@
     "zod-openapi": "4.2.3"
   },
   "devDependencies": {
+    "@toolkit-dev/viteconfig": "workspace:*",
     "@types/node": "20.14.8",
     "typescript": "5.7.3",
     "vitest": "3.0.5",

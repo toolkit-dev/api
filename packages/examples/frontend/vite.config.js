@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------------- */
 
 // 3rd party
-import { defineConfig } from "vite";
+import { createViteConfig } from "@toolkit-dev/viteconfig";
 import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 
@@ -11,6 +11,7 @@ import checker from "vite-plugin-checker";
  * vite config
  * -------------------------------------------------------------------------- */
 
-export default defineConfig({
+export default createViteConfig({
+  name: "frontend",
   plugins: [react(), checker({ typescript: true })],
 });

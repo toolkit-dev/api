@@ -3,16 +3,10 @@
  * -------------------------------------------------------------------------- */
 
 // 3rd party
-import neostandard, { resolveIgnoresFromGitignore } from "neostandard";
+import { createEslintConfig } from "@toolkit-dev/eslintconfig";
 
 /* -----------------------------------------------------------------------------
  * eslint config
  * -------------------------------------------------------------------------- */
 
-const config = neostandard({
-  ignores: resolveIgnoresFromGitignore(),
-  ts: true,
-  noStyle: true,
-});
-
-export default config;
+export default createEslintConfig();

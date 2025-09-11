@@ -22,7 +22,6 @@ export default defineConfig({
         [
           "anyof",
           ["match", "tsconfig.json", "basename"],
-          ["match", "tsconfig.options.json", "basename"],
           // Match tsconfig.json in any subdirectory
           ["match", "**/tsconfig.json", "wholename"],
         ],
@@ -41,24 +40,28 @@ export default defineConfig({
         [
           "anyof",
           // Watch the built files in example/dist
-          ["match", "packages/examples/backend/dist/**", "wholename"],
+          ["match", "packages/examples/backend/dist/esm/**", "wholename"],
           // Watch dist files of sibling dependencies
-          ["match", "packages/jsonapi/jsonapi-serializer/dist/**", "wholename"],
-          ["match", "packages/jsonapi/jsonapi-types/dist/**", "wholename"],
-          ["match", "packages/jsonapi/jsonapi-zod/dist/**", "wholename"],
           [
             "match",
-            "packages/openapi/openapi-client-fetch/dist/**",
+            "packages/jsonapi/jsonapi-serializer/dist/esm/**",
+            "wholename",
+          ],
+          ["match", "packages/jsonapi/jsonapi-types/dist/esm/**", "wholename"],
+          ["match", "packages/jsonapi/jsonapi-zod/dist/esm/**", "wholename"],
+          [
+            "match",
+            "packages/openapi/openapi-client-fetch/dist/esm/**",
             "wholename",
           ],
           [
             "match",
-            "packages/openapi/openapi-document-zod/dist/**",
+            "packages/openapi/openapi-document-zod/dist/esm/**",
             "wholename",
           ],
           [
             "match",
-            "packages/openapi/openapi-server-hono/dist/**",
+            "packages/openapi/openapi-server-hono/dist/esm/**",
             "wholename",
           ],
         ],

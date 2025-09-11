@@ -1,10 +1,13 @@
 {
-  "extends": "./tsconfig.options.json",
+  "extends": "./packages/configs/tsconfig/tsconfig.pkg.json",
   "files": ["./turbowatch.ts"],
-  "compilerOptions": {
-    "noEmit": true
-  },
   "references": [
+    {
+      "path": "./packages/configs/eslintconfig"
+    },
+    {
+      "path": "./packages/configs/viteconfig"
+    },
     {
       "path": "./packages/examples/backend"
     },

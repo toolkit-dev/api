@@ -1,29 +1,8 @@
 {
-  "extends": "../../../tsconfig.options.json",
-  "include": ["."],
-  "exclude": ["./dist", "./node_modules"],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "dist",
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
-  },
+  "extends": "../../configs/tsconfig/tsconfig.pkg.json",
   "references": [
     {
-      "path": "../backend"
-    },
-    {
-      "path": "../../jsonapi/jsonapi-parser"
-    },
-    {
-      "path": "../../openapi/openapi-client-fetch"
-    },
-    {
-      "path": "../../react-query/react-query-jsonapi"
-    },
-    {
-      "path": "../../react-query/react-query-fetch"
+      "path": "./tsconfig.esm.json"
     }
   ]
 }
