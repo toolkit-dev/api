@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@toolkit-dev/tsconfig": "workspace:*",
-    "@types/node": "22.13.14",
+    "@types/node": "24.1.0",
     "prettier": "3.3.3",
     "typescript": "5.7.3"
   }

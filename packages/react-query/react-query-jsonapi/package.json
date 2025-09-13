@@ -24,7 +24,7 @@
     "type-fest": "4.35.0"
   },
   "devDependencies": {
-    "@types/node": "20.14.8",
+    "@types/node": "24.1.0",
     "@toolkit-dev/viteconfig": "workspace:*",
     "typescript": "5.7.3",
     "vitest": "3.0.5"
