@@ -23,13 +23,15 @@
     "p-props": "5.0.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.3.8",
     "@toolkit-dev/viteconfig": "workspace:*",
     "@types/lodash": "4.14.191",
     "@types/node": "24.1.0",
+    "drizzle-kit": "0.31.4",
+    "drizzle-orm": "0.44.5",
     "knex": "3.1.0",
     "lodash": "4.17.21",
     "objection": "3.0.1",
-    "sqlite3": "5.1.4",
     "typescript": "5.7.3",
     "type-fest": "4.35.0",
     "vitest": "3.0.5",

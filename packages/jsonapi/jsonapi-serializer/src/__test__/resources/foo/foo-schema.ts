@@ -9,8 +9,8 @@ import { z } from "zod";
 import { j } from "@jsonapi/zod";
 
 // lib
-import { Bar } from "../bar/bar-model.js";
-import { Baz } from "../baz/baz-model.js";
+import { Bar, barSchema } from "../bar/bar-schema.js";
+import { Baz, bazSchema } from "../baz/baz-schema.js";
 
 /* -----------------------------------------------------------------------------
  * Foo schema
@@ -22,6 +22,23 @@ export const fooFields = z.object({
   bazId: z.coerce.string(),
   attr: z.string(),
 });
+
+export type Foo = z.output<typeof fooFields> & {
+  bars?: Bar[];
+  baz?: Baz;
+};
+export const fooSchema = fooFields.extend({
+  bars: z.lazy(() => z.array(barSchema)).optional(),
+  baz: z.lazy(() => bazSchema).optional(),
+});
+
+export type FooCreateInput = z.input<typeof fooCreateSchema>;
+export type FooCreateOutput = z.output<typeof fooCreateSchema>;
+export const fooCreateSchema = fooFields.omit({ id: true });
+
+export type FooUpdateInput = z.input<typeof fooUpdateSchema>;
+export type FooUpdateOutput = z.output<typeof fooUpdateSchema>;
+export const fooUpdateSchema = fooFields.partial();
 
 export type FooResource = z.output<typeof fooResourceSchema>;
 export const fooResourceSchema = j.resource({

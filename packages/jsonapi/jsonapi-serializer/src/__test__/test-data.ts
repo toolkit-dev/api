@@ -2,30 +2,36 @@
  * dependencies
  * -------------------------------------------------------------------------- */
 
+// 3rd party
+import { sql } from "drizzle-orm";
+import { createRequire } from "node:module";
+
 // lib
-import { db } from "./test-db.js";
-import { Bar } from "./resources/bar/bar-model.js";
-import { Baz } from "./resources/baz/baz-model.js";
-import { Foo } from "./resources/foo/foo-model.js";
+import { db, schema } from "./test-db.js";
 
 /* -----------------------------------------------------------------------------
  * db
  * -------------------------------------------------------------------------- */
 
-export async function initDb() {
-  await Baz.init();
-  await Foo.init();
-  await Bar.init();
-}
+const require = createRequire(import.meta.url);
+const { pushSchema } =
+  require("drizzle-kit/api") as typeof import("drizzle-kit/api");
 
 export async function resetDb() {
-  const tablenamesResult = await db
-    .select("name")
-    .from("sqlite_schema")
-    .where("type", "table")
-    .andWhereNot("name", "like", "sqlite_%");
+  await db.execute(sql`DROP SCHEMA public CASCADE;`);
+  await db.execute(sql`CREATE SCHEMA public;`);
 
-  await Promise.all(
-    tablenamesResult.map(({ name }) => db.raw(`DELETE FROM ${name};`)),
-  );
+  const originalStdoutWrite = process.stdout.write;
+  const originalStderrWrite = process.stderr.write;
+
+  process.stdout.write = () => true;
+  process.stderr.write = () => true;
+
+  try {
+    const { apply } = await pushSchema(schema, db as any);
+    await apply();
+  } finally {
+    process.stdout.write = originalStdoutWrite;
+    process.stderr.write = originalStderrWrite;
+  }
 }

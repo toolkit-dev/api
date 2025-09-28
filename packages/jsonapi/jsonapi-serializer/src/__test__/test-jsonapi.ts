@@ -4,18 +4,15 @@
 
 // lib
 import { createJsonapi, ResourceSerializers } from "../jsonapi.js";
-import { Bar } from "./resources/bar/bar-model.js";
-import { BarResource } from "./resources/bar/bar-schema.js";
-import { Baz } from "./resources/baz/baz-model.js";
-import { BazResource } from "./resources/baz/baz-schema.js";
-import { Foo } from "./resources/foo/foo-model.js";
+import { Bar, BarResource } from "./resources/bar/bar-schema.js";
+import { Baz, BazResource } from "./resources/baz/baz-schema.js";
 import {
+  Foo,
   FooArtifacts,
   FooDocument,
   FooResource,
 } from "./resources/foo/foo-schema.js";
-import { Qux } from "./resources/qux/qux-model.js";
-import { QuxResource } from "./resources/qux/qux-schema.js";
+import { Qux, QuxResource } from "./resources/qux/qux-schema.js";
 
 /* -----------------------------------------------------------------------------
  * test jsonapi

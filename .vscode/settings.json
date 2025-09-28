@@ -1,5 +1,7 @@
 {
   "editor.formatOnSave": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
   "nix.formatterPath": "alejandra",
   "[nix]": {
     "editor.defaultFormatter": "jnoortheen.nix-ide"

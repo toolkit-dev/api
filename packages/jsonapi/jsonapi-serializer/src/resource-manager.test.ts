@@ -3,43 +3,42 @@
  * -------------------------------------------------------------------------- */
 
 // 3rd party
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
 // lib
-import { initDb, resetDb } from "./__test__/test-data.js";
-import { Baz } from "./__test__/resources/baz/baz-model.js";
-import { Foo } from "./__test__/resources/foo/foo-model.js";
+import { resetDb } from "./__test__/test-data.js";
 import { resourceSerializersGenerator } from "./__test__/test-jsonapi.js";
 import { ResourceManager } from "./resource-manager.js";
 import { SerializerContext } from "./serializer-context.js";
+import { db } from "./__test__/test-db.js";
+import { bazs } from "./__test__/resources/baz/baz-table.js";
+import { foos } from "./__test__/resources/foo/foo-table.js";
 
 /* -----------------------------------------------------------------------------
  * ResourceManager
  * -------------------------------------------------------------------------- */
-
-beforeAll(async () => {
-  await initDb();
-});
 
 beforeEach(async () => {
   await resetDb();
 });
 
 describe("ResourceManager", async () => {
-  test.only("Should be able to add and access inputs", async () => {
+  test("Should be able to add and access inputs", async () => {
     const serializers = await resourceSerializersGenerator();
     const resourceManager = new ResourceManager(serializers);
 
-    const baz1 = await Baz.query().insertAndFetch({ value: "baz1" });
-    const baz2 = await Baz.query().insertAndFetch({ value: "baz2" });
-    const foo1 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo1",
-    });
-    const foo2 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo2",
-    });
+    const [baz1, baz2] = await db
+      .insert(bazs)
+      .values([{ value: "baz1" }, { value: "baz2" }])
+      .returning();
+
+    const [foo1, foo2] = await db
+      .insert(foos)
+      .values([
+        { bazId: baz1.id, attr: "foo1" },
+        { bazId: baz1.id, attr: "foo2" },
+      ])
+      .returning();
 
     expect(resourceManager.getInput("baz", baz1.id)).toBeUndefined();
     expect(resourceManager.getInput("baz", baz2.id)).toBeUndefined();
@@ -66,16 +65,18 @@ describe("ResourceManager", async () => {
     const resourceManager = new ResourceManager(serializers);
     const ctx = new SerializerContext(resourceManager);
 
-    const baz1 = await Baz.query().insertAndFetch({ value: "baz1" });
-    const baz2 = await Baz.query().insertAndFetch({ value: "baz2" });
-    const foo1 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo1",
-    });
-    const foo2 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo2",
-    });
+    const [baz1, baz2] = await db
+      .insert(bazs)
+      .values([{ value: "baz1" }, { value: "baz2" }])
+      .returning();
+
+    const [foo1, foo2] = await db
+      .insert(foos)
+      .values([
+        { bazId: baz1.id, attr: "foo1" },
+        { bazId: baz1.id, attr: "foo2" },
+      ])
+      .returning();
 
     const baz1Resource = await serializers.baz.serialize(baz1, ctx);
     const baz2Resource = await serializers.baz.serialize(baz2, ctx);
@@ -107,16 +108,18 @@ describe("ResourceManager", async () => {
     const resourceManager = new ResourceManager(serializers);
     const ctx = new SerializerContext(resourceManager);
 
-    const baz1 = await Baz.query().insertAndFetch({ value: "baz1" });
-    const baz2 = await Baz.query().insertAndFetch({ value: "baz2" });
-    const foo1 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo1",
-    });
-    const foo2 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo2",
-    });
+    const [baz1, baz2] = await db
+      .insert(bazs)
+      .values([{ value: "baz1" }, { value: "baz2" }])
+      .returning();
+
+    const [foo1, foo2] = await db
+      .insert(foos)
+      .values([
+        { bazId: baz1.id, attr: "foo1" },
+        { bazId: baz1.id, attr: "foo2" },
+      ])
+      .returning();
 
     resourceManager.addInput("baz", baz1);
     resourceManager.addInput("foo", foo1);
@@ -159,16 +162,18 @@ describe("ResourceManager", async () => {
     const resourceManager = new ResourceManager(serializers);
     const ctx = new SerializerContext(resourceManager);
 
-    const baz1 = await Baz.query().insertAndFetch({ value: "baz1" });
-    const baz2 = await Baz.query().insertAndFetch({ value: "baz2" });
-    const foo1 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo1",
-    });
-    const foo2 = await Foo.query().insertAndFetch({
-      bazId: baz1.id,
-      attr: "foo2",
-    });
+    const [baz1, baz2] = await db
+      .insert(bazs)
+      .values([{ value: "baz1" }, { value: "baz2" }])
+      .returning();
+
+    const [foo1, foo2] = await db
+      .insert(foos)
+      .values([
+        { bazId: baz1.id, attr: "foo1" },
+        { bazId: baz1.id, attr: "foo2" },
+      ])
+      .returning();
 
     const baz1Resource = await serializers.baz.serialize(baz1, ctx);
     const baz2Resource = await serializers.baz.serialize(baz2, ctx);
