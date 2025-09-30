@@ -2,51 +2,68 @@
 
 ## Repository Overview
 
-This repository is **Toolkit** - a TypeScript library that provides everything needed to build end-to-end typesafe APIs. The slogan is "define once, and ship with confidence." It's a monorepo containing multiple packages for JSON:API and OpenAPI support, along with React Query integrations and examples.
+**Toolkit** is a TypeScript library that provides everything needed to build end-to-end typesafe APIs. The slogan is "define once, and ship with confidence." It's a monorepo containing multiple packages for JSON:API and OpenAPI support, along with React Query integrations and examples.
 
 **Key Details:**
 
-- **Language:** TypeScript/JavaScript (ESM modules)
+- **Language:** TypeScript/JavaScript (ESM modules only)
 - **Package Manager:** pnpm with workspaces
 - **Build System:** TypeScript compiler, Nix flake for environment
-- **Framework:** Hono (for HTTP server), Zod (for schema validation), React Query
+- **Primary Tools:** Hono (HTTP server), Zod (validation), React Query
 - **Repository Size:** ~15 packages across JSON:API, OpenAPI, React Query, and examples
 - **Target Runtime:** Node.js 22
 
-## Environment Setup and Build Instructions
+## Environment Setup
 
 ### Prerequisites
 
-This repository requires Nix for development environment management. Nix will be provided by the hosting environment - do not attempt to install it yourself.
+This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](AGENTS.md) for critical requirements about command execution.**
 
-### Bootstrap Process
+**All commands must be prefixed with `nix develop --command`** to access the development environment. This prefix provides Node.js 22, pnpm 10, and all development tools.
+
+**Pattern:** `nix develop --command <your-command>`
+
+In command examples below, this prefix is shown explicitly.
+
+### Initial Setup
 
 1. **Start development environment:**
+
    ```bash
    nix develop --command bash
    ```
-   - Enters Nix shell with all tools available
+
    - Takes 30-90 seconds on first run to download and configure environment
-   - Provides Node.js 22, pnpm 10, and all development tools
+   - Provides all development tools
 
 2. **Install dependencies:**
+
    ```bash
    nix develop --command pnpm install
    ```
+
    - Takes ~30-60 seconds on first run
    - Creates node_modules and sets up husky git hooks
-   - Must be run with nix develop prefix
 
-### Build Commands
+3. **Compile TypeScript** (required before running most commands):
+   ```bash
+   nix develop --command pnpm -r run compile
+   ```
+   - Compiles all packages in dependency order
 
-**Compile TypeScript** (required before running most commands):
+## Build & Development
+
+### Common Commands
+
+**Development server:**
 
 ```bash
-nix develop --command pnpm -r run compile
+nix develop --command pnpm run dev
 ```
 
-- Compiles all packages in dependency order
-- Most packages compile successfully and this is expected
+- Runs turbowatch for file watching and auto-compilation
+- Starts example backend server on http://localhost:3000
+- Rebuilds on TypeScript config changes
 
 **Lint code:**
 
@@ -66,15 +83,6 @@ nix develop --command pnpm run format
 - Uses Prettier for code formatting
 - Applied automatically on git commit via lint-staged
 
-**Run tests:**
-
-```bash
-nix develop --command pnpm run test
-```
-
-- Currently returns "No tests specified" (tests are at package level)
-- Individual packages may have vitest tests
-
 **Clean build artifacts:**
 
 ```bash
@@ -83,35 +91,31 @@ nix develop --command pnpm run clean:cache  # Clean dist folders only
 nix develop --command pnpm run clean:deps   # Clean node_modules only
 ```
 
-### Development Workflow
-
-**Start development server:**
-
-```bash
-nix develop --command pnpm run dev
-```
-
-- Runs turbowatch for file watching and TypeScript compilation
-- Automatically starts example backend server on http://localhost:3000
-- Rebuilds on TypeScript config changes
-
 **Run specific package commands:**
 
 ```bash
 nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
 ```
 
+### Development Workflow
 
+1. Make changes to code
+2. Compile if needed: `nix develop --command pnpm -r run compile`
+3. Lint frequently: `nix develop --command pnpm run lint`
+4. Test specific packages using `--filter` flag with pnpm commands
+5. Commit (pre-commit hooks will run Prettier and ESLint automatically)
 
-## Project Architecture and Layout
+## Project Architecture
 
 ### Package Structure
 
-To see the current package structure:
+View current packages:
 
 ```bash
 nix develop --command find packages -name "package.json" -exec dirname {} \;
 ```
+
+**Workspace dependencies:** Packages use `workspace:*` for internal dependencies
 
 ### Key Configuration Files
 
@@ -122,62 +126,61 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 - `eslint.config.js`: ESLint configuration using neostandard
 - `lint-staged.config.js`: Pre-commit formatting and linting
 - `turbowatch.ts`: File watching and development server configuration
+- `.envrc`: direnv integration (loads Nix automatically)
+
+### Development Tools
+
+- **DevContainer:** Available at `.devcontainer/devcontainer.json` using Nix container
+- **VSCode:** Settings in `.vscode/` configure Nix formatter and format-on-save
+- **Pre-commit Hooks:** Husky runs lint-staged (prettier + eslint) on commits
 
 ### CI/CD Pipeline
 
 - **GitHub Actions:** `.github/workflows/run_test.yml` (uses shared workflow)
 - **Copilot Setup:** `.github/workflows/copilot-setup-steps.yml` installs Nix and dependencies
-- **Pre-commit Hooks:** Husky runs lint-staged (prettier + eslint) on commits
 - **Renovate:** Automated dependency updates via `.github/renovate.json5`
 
-### Development Environment
+## Troubleshooting
 
-- **DevContainer:** Available at `.devcontainer/devcontainer.json` using Nix container
-- **VSCode:** Settings in `.vscode/` configure Nix formatter and format-on-save
-- **Environment:** Uses `.envrc` for direnv integration (loads Nix automatically)
+### Validation Commands
 
-## Working with This Repository
+If you encounter issues, verify the environment with these commands:
 
-### Making Changes
+**Check linting:**
 
-1. **Install dependencies:** `nix develop --command pnpm install`
-2. **Compile before testing:** `nix develop --command pnpm -r run compile`
-3. **Lint frequently:** Code must pass `nix develop --command pnpm run lint`
-4. **Test specific packages:** Use `--filter` flag with pnpm commands
-5. **Pre-commit hooks will run:** Prettier and ESLint automatically on commit
+```bash
+nix develop --command pnpm run lint
+```
 
-### Common Issues and Workarounds
+**Check TypeScript compilation:**
 
-- **Husky pre-commit failures:** Ensure commands use `nix develop --command` prefix
-- **Missing dependencies:** Always use `nix develop --command` prefix for all commands
-- **Git tree dirty warnings:** Expected during development, ignore unless blocking
+```bash
+nix develop --command pnpm -r run compile
+```
 
-### Validation Steps
+**Verify example server:**
 
-- **Lint check:** `nix develop --command pnpm run lint` must pass
-- **Type check:** `nix develop --command pnpm -r run compile` must pass
-- **Example server:** `nix develop --command pnpm --filter @toolkit-dev/examples-backend run start` should start on port 3000
+```bash
+nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
+```
 
+Server should start on port 3000.
 
+### Common Issues
 
-## Important Notes
-
-- **Trust these instructions:** Only search for additional information if instructions are incomplete or incorrect
-- **Use Nix always:** Do not bypass the Nix development environment
-- **Workspace dependencies:** Packages use `workspace:*` for internal dependencies
-- **ESM only:** All packages are ESM modules (`"type": "module"`)
-- **Monorepo structure:** Changes may affect multiple packages, test accordingly
+- **Command not found errors:** Ensure you're using the `nix develop --command` prefix
+- **Husky pre-commit failures:** Git hooks require the Nix environment; ensure the prefix is used
+- **Missing dependencies:** Run `nix develop --command pnpm install`
 
 ## For AI Coding Agents
 
-**See `AGENTS.md` for detailed guidance on working with this repository as an AI agent.** Key points:
+**See [AGENTS.md](../AGENTS.md) for critical requirements about working with the Nix environment.**
 
-- **Required:** EVERY bash command must use `nix develop --command` prefix when working in this repository
-- **No exceptions:** This applies to all commands - pnpm, git, node, npm, etc.
-- **Pattern:** `nix develop --command <your-command>`
-- **Git hooks compatibility:** The prefix ensures pnpm is available when husky runs pre-commit hooks
-- **Remember this requirement:** You must consistently apply this pattern for reliable operation
-- Never attempt to install Nix yourself - it's provided by the hosting environment
+Key points:
+
+- Every command must use `nix develop --command` prefix
+- This applies to all operations: pnpm, git, node, npm, etc.
+- No exceptions to this requirement
 
 <tool_calling>
 You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
