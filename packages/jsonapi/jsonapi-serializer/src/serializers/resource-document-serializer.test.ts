@@ -4,31 +4,37 @@
  * -------------------------------------------------------------------------- */
 
 // 3rd party
-import { beforeAll, beforeEach, test } from "vitest";
+import { beforeEach, expect, test } from "vitest";
 
 // lib
 import { env } from "../__test__/test-env.js";
-import { initDb, resetDb } from "../__test__/test-data.js";
-import { Baz } from "../__test__/resources/baz/baz-model.js";
+import { resetDb } from "../__test__/test-data.js";
 import { jsonapi } from "../__test__/test-jsonapi.js";
+import { db } from "../__test__/test-db.js";
+import { bazs } from "../__test__/resources/baz/baz-table.js";
+import { foos } from "../__test__/resources/foo/foo-table.js";
+import { bars } from "../__test__/resources/bar/bar-table.js";
 
 /* -----------------------------------------------------------------------------
  * ResourceDocumentSerializer
  * -------------------------------------------------------------------------- */
-
-beforeAll(async () => {
-  await initDb();
-});
 
 beforeEach(async () => {
   await resetDb();
 });
 
 test("Should serialize resource", async () => {
-  const baz = await Baz.query().insertGraphAndFetch({
-    value: "testing",
-    foo: { attr: "foo", bars: [{ attr: "bar" }] },
-  });
+  const [baz] = await db.insert(bazs).values({ value: "testing" }).returning();
+
+  const [foo] = await db
+    .insert(foos)
+    .values({ attr: "foo", bazId: baz.id })
+    .returning();
+
+  const [bar] = await db
+    .insert(bars)
+    .values({ attr: "bar", fooId: foo.id })
+    .returning();
 
   const fooDocumentSerializer = jsonapi
     .createResourceDocumentSerializer("foo", "itemDocumentOutput")
@@ -40,7 +46,9 @@ test("Should serialize resource", async () => {
     }))
     .done();
 
-  await fooDocumentSerializer.serialize(baz.foo!, {
+  const fooDocument = await fooDocumentSerializer.serialize(foo, {
     include: ["bars.foo"],
   });
+
+  expect(fooDocument).toBeDefined();
 });

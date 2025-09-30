@@ -2,11 +2,16 @@
  * dependencies
  * -------------------------------------------------------------------------- */
 
+// 3rd party
+import { inArray } from "drizzle-orm";
+
 // lib
+import { db } from "../../test-db.js";
 import { env } from "../../test-env.js";
 import { jsonapi } from "../../test-jsonapi.js";
-import { Foo } from "./foo-model.js";
+import { foos } from "./foo-table.js";
 import { fooResourceSchema } from "./foo-schema.js";
+import { getBarsGroupedByFooId, getBazsKeyedByFooId } from "./foo-queries.js";
 
 /* -----------------------------------------------------------------------------
  * Foo Serializer
@@ -15,11 +20,14 @@ import { fooResourceSchema } from "./foo-schema.js";
 export const fooSerializer = jsonapi
   .createResourceSerializer("foo")
   .schema(fooResourceSchema)
-  .resolver(async (ids) => await Foo.query().findByIds(ids))
+  .resolver(
+    async (ids) =>
+      await db.query.foos.findMany({ where: inArray(foos.id, ids) }),
+  )
   .artifacts(async (foos) => {
     const [barsByFooId, bazsByFooId] = await Promise.all([
-      Foo.getBarsGroupedByFooId(foos),
-      Foo.getBazsKeyedByFooId(foos),
+      getBarsGroupedByFooId(foos),
+      getBazsKeyedByFooId(foos),
     ]);
 
     return { barsByFooId, bazsByFooId };

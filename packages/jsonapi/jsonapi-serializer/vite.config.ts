@@ -11,4 +11,7 @@ import { createViteConfig } from "@toolkit-dev/viteconfig";
 
 export default createViteConfig({
   name: "jsonapi-serializer",
+  test: {
+    environment: "node",
+  },
 });

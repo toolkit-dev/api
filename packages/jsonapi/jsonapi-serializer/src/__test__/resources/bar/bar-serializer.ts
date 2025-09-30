@@ -2,11 +2,15 @@
  * dependencies
  * -------------------------------------------------------------------------- */
 
+// 3rd party
+import { inArray } from "drizzle-orm";
+
 // lib
+import { db } from "../../test-db.js";
 import { env } from "../../test-env.js";
 import { jsonapi } from "../../test-jsonapi.js";
-import { Bar } from "./bar-model.js";
 import { barResourceSchema } from "./bar-schema.js";
+import { bars } from "./bar-table.js";
 
 /* -----------------------------------------------------------------------------
  * Bar Serializer
@@ -15,7 +19,10 @@ import { barResourceSchema } from "./bar-schema.js";
 export const barSerializer = jsonapi
   .createResourceSerializer("bar")
   .schema(barResourceSchema)
-  .resolver(async (ids, ctx) => await Bar.query().findByIds(ids))
+  .resolver(
+    async (ids, ctx) =>
+      await db.query.bars.findMany({ where: inArray(bars.id, ids) }),
+  )
   .store((bars, ctx) => ({
     foo: bars.map((bar) => bar.foo),
   }))

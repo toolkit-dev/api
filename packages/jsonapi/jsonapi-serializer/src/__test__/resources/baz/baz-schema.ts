@@ -18,6 +18,17 @@ export const bazFields = z.object({
   value: z.string(),
 });
 
+export type Baz = z.output<typeof bazSchema>;
+export const bazSchema = bazFields;
+
+export type BazCreateInput = z.input<typeof bazCreateSchema>;
+export type BazCreateOutput = z.output<typeof bazCreateSchema>;
+export const bazCreateSchema = bazFields.omit({ id: true });
+
+export type BazUpdateInput = z.input<typeof bazUpdateSchema>;
+export type BazUpdateOutput = z.output<typeof bazUpdateSchema>;
+export const bazUpdateSchema = bazFields.partial();
+
 export type BazResource = z.output<typeof bazResourceSchema>;
 export const bazResourceSchema = j.resource({
   type: z.literal("baz"),
