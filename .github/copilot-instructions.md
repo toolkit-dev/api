@@ -47,7 +47,7 @@ In command examples below, this prefix is shown explicitly.
 
 3. **Compile TypeScript** (required before running most commands):
    ```bash
-   nix develop --command pnpm -r run compile
+   nix develop --command pnpm compile
    ```
    - Compiles all packages in dependency order
 
@@ -106,7 +106,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run test
 ### Development Workflow
 
 1. Make changes to code
-2. Compile if needed: `nix develop --command pnpm -r run compile`
+2. Compile if needed: `nix develop --command pnpm compile`
 3. Lint frequently: `nix develop --command pnpm run lint`
 4. Test individual packages: `nix develop --command pnpm --filter <package-name> run test`
 5. Run example server: `nix develop --command pnpm --filter @toolkit-dev/examples-backend run start`
@@ -115,6 +115,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run test
 ### Common Development Patterns
 
 **Working with specific packages:**
+
 ```bash
 # Navigate to specific package (optional, commands work from root)
 cd packages/jsonapi/jsonapi-types
@@ -122,17 +123,18 @@ cd packages/jsonapi/jsonapi-types
 # Compile single package
 nix develop --command pnpm --filter @jsonapi/types run compile
 
-# Lint single package  
+# Lint single package
 nix develop --command pnpm --filter @jsonapi/types run lint
 ```
 
 **Multi-package workflows:**
+
 ```bash
 # Compile all packages in dependency order
-nix develop --command pnpm -r run compile
+nix develop --command pnpm compile
 
 # Clean and rebuild everything
-nix develop --command pnpm run clean && nix develop --command pnpm install && nix develop --command pnpm -r run compile
+nix develop --command pnpm run clean && nix develop --command pnpm install && nix develop --command pnpm compile
 ```
 
 ## Project Architecture
@@ -146,6 +148,7 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 ```
 
 **Package Categories:**
+
 - **jsonapi/**: JSON:API implementation packages (types, parser, serializer, zod integration)
 - **openapi/**: OpenAPI implementation packages (core, client, server, document validation)
 - **react-query/**: React Query integrations for both JSON:API and fetch-based APIs
@@ -167,7 +170,6 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 
 ### Development Tools
 
-- **DevContainer:** Available at `.devcontainer/devcontainer.json` using Nix container
 - **VSCode:** Settings in `.vscode/` configure Nix formatter and format-on-save
 - **Pre-commit Hooks:** Husky runs lint-staged (prettier + eslint) on commits
 
@@ -192,22 +194,16 @@ nix develop --command pnpm run lint
 **Check TypeScript compilation:**
 
 ```bash
-nix develop --command pnpm -r run compile
+nix develop --command pnpm compile
 ```
 
 **Verify example server:**
 
 ```bash
-nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
+nix develop --command pnpm dev
 ```
 
 Server should start on port 3000.
-
-**Test specific package functionality:**
-
-```bash
-nix develop --command pnpm --filter @toolkit-dev/examples-backend run test
-```
 
 ### Common Issues
 

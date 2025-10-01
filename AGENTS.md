@@ -41,7 +41,7 @@ nix develop --command git add .
 nix develop --command git commit -m "implement feature"
 
 # TypeScript compilation
-nix develop --command pnpm -r run compile
+nix develop --command pnpm compile
 
 # Running specific packages
 nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
