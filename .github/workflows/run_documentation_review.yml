@@ -1,0 +1,17 @@
+name: Daily Documentation Review
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # Midnight PT = 8 AM UTC
+  workflow_dispatch:
+
+jobs:
+  review-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Copilot Agent
+        run: |
+          gh agent-task create \
+            "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
