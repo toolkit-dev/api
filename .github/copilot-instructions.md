@@ -10,8 +10,8 @@
 - **Package Manager:** pnpm with workspaces
 - **Build System:** TypeScript compiler, Nix flake for environment
 - **Primary Tools:** Hono (HTTP server), Zod (validation), React Query
-- **Repository Size:** ~15 packages across JSON:API, OpenAPI, React Query, and examples
-- **Target Runtime:** Node.js 22
+- **Repository Size:** Multiple packages across JSON:API, OpenAPI, React Query, and examples
+- **Target Runtime:** Node.js (see flake.nix for exact version)
 
 ## Environment Setup
 
@@ -19,7 +19,7 @@
 
 This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](AGENTS.md) for critical requirements about command execution.**
 
-**All commands must be prefixed with `nix develop --command`** to access the development environment. This prefix provides Node.js 22, pnpm 10, and all development tools.
+**All commands must be prefixed with `nix develop --command`** to access the development environment. This prefix provides Node.js, pnpm, and all development tools (exact versions defined in flake.nix).
 
 **Pattern:** `nix develop --command <your-command>`
 
@@ -62,7 +62,7 @@ nix develop --command pnpm run dev
 ```
 
 - Runs turbowatch for file watching and auto-compilation
-- Starts example backend server on http://localhost:3000
+- Starts example backend server (port configured in example package)
 - Rebuilds on TypeScript config changes
 
 **Lint code:**
@@ -117,9 +117,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run test
 **Working with specific packages:**
 
 ```bash
-# Navigate to specific package (optional, commands work from root)
-cd packages/jsonapi/jsonapi-types
-
+# Commands work from root directory using package filters
 # Compile single package
 nix develop --command pnpm --filter @jsonapi/types run compile
 
@@ -150,19 +148,19 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 **Package Categories:**
 
 - **jsonapi/**: JSON:API implementation packages (types, parser, serializer, zod integration)
-- **openapi/**: OpenAPI implementation packages (core, client, server, document validation)
+- **openapi/**: OpenAPI implementation packages (core, client, server, document validation, standard schema)
 - **react-query/**: React Query integrations for both JSON:API and fetch-based APIs
 - **runtime/**: Core runtime utilities (error handling, etc.)
 - **examples/**: Example applications (backend server, frontend client)
+- **configs/**: Shared configuration packages (ESLint, TypeScript, Vite)
 
 **Workspace dependencies:** Packages use `workspace:*` for internal dependencies
 
 ### Key Configuration Files
 
-- `flake.nix`: Nix development environment (Node.js 22, pnpm 10)
+- `flake.nix`: Nix development environment (Node.js, pnpm, and tools)
 - `pnpm-workspace.yaml`: pnpm workspace configuration
 - `tsconfig.json`: TypeScript project references and build config
-- `tsconfig.options.json`: Shared TypeScript compiler options
 - `eslint.config.js`: ESLint configuration using neostandard
 - `lint-staged.config.js`: Pre-commit formatting and linting
 - `turbowatch.ts`: File watching and development server configuration
