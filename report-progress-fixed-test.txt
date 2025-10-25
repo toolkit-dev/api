@@ -1,0 +1,1 @@
+testing report_progress with fixed hooks
