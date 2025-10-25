@@ -1,1 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# If we're not already in nix develop, re-exec inside it.
+if [ -z "${IN_NIX_SHELL-}" ]; then
+  exec nix develop --command "$0" "$@"
+fi
+
 pnpm exec commitlint --edit ${1}
