@@ -1,3 +1,6 @@
 # Ignore all "built" files
 dist/**/*
 docs/**/*
+
+# Ignore lockfile to preserve exact formatting
+pnpm-lock.yaml
