@@ -51,7 +51,7 @@ In command examples below, this prefix is shown explicitly.
    ```bash
    nix develop --command pnpm compile
    ```
-   - Compiles all packages in dependency order (~9 seconds total)
+   - Compiles all packages in dependency order
    - Must be run after clean operations
 
 ## Build & Development
@@ -83,7 +83,7 @@ nix develop --command pnpm run lint
 nix develop --command pnpm run format
 ```
 
-- Uses Prettier for code formatting (~3 seconds total)
+- Uses Prettier for code formatting
 - Applied automatically on git commit via lint-staged
 - Formats all file types in repository
 
@@ -91,7 +91,7 @@ nix develop --command pnpm run format
 
 ```bash
 nix develop --command pnpm run clean        # Clean all
-nix develop --command pnpm run clean:cache  # Clean dist folders only (~2 seconds)
+nix develop --command pnpm run clean:cache  # Clean dist folders only
 nix develop --command pnpm run clean:deps   # Clean node_modules only
 ```
 
@@ -107,7 +107,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
 nix develop --command pnpm test
 ```
 
-- Runs vitest for all packages with tests (~4-5 seconds total)
+- Runs vitest for all packages with tests
 - Currently tests 8 test cases across 5 test files
 
 **Test specific packages:**
@@ -184,7 +184,7 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 - **@toolkit-dev/react-query-fetch** - React Query + fetch client
 
 **Examples:**
-- **@toolkit-dev/examples-backend** - Demo Hono server (port 3000)
+- **@toolkit-dev/examples-backend** - Demo Hono server
 - **@toolkit-dev/examples-frontend** - Demo React frontend
 
 ### Key Configuration Files
@@ -197,7 +197,7 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 - `turbowatch.ts`: File watching and development server configuration (auto-compiles on changes)
 - `.envrc`: direnv integration (loads Nix automatically)
 - `commitlint.config.js`: Enforces conventional commit message format
-- `.editorconfig`: Code style configuration (2 spaces, LF, UTF-8)
+- `.editorconfig`: Code style configuration
 
 ### Development Tools
 
@@ -251,7 +251,7 @@ Server should start on port 3000.
 **To verify environment is working correctly:**
 
 ```bash
-# Check tool versions (Node.js 24.x, pnpm 10.x expected)
+# Check tool versions
 nix develop --command node --version
 nix develop --command pnpm --version
 
