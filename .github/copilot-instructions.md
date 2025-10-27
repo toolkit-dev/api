@@ -146,13 +146,6 @@ nix develop --command pnpm compile
 
 # Clean and rebuild everything
 nix develop --command pnpm run clean && nix develop --command pnpm install && nix develop --command pnpm compile
-
-# Build order is important - packages have dependencies:
-# 1. configs/*, runtime/* (no dependencies)  
-# 2. jsonapi/jsonapi-types, openapi/openapi-core
-# 3. jsonapi/jsonapi-parser, jsonapi/jsonapi-zod, openapi/openapi-*
-# 4. jsonapi/jsonapi-serializer, react-query/*
-# 5. examples/* (depend on most other packages)
 ```
 
 ## Project Architecture
@@ -211,7 +204,7 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 - **VSCode:** Settings in `.vscode/` configure Nix formatter and format-on-save
 - **Pre-commit Hooks:** Husky runs lint-staged (prettier + eslint) on commits
 - **Commit linting:** Enforces conventional commit messages via commitlint
-- **DevContainer:** Available at `.devcontainer/devcontainer.json` for containerized development
+- **DevContainer:** Available at `.devcontainer/devcontainer.json` for engineers using CodeSpaces (AI agents should use the standard Nix environment)
 
 ### CI/CD Pipeline
 
@@ -251,20 +244,7 @@ Server should start on port 3000.
 - **Husky pre-commit failures:** Git hooks require the Nix environment; ensure the prefix is used
 - **Missing dependencies:** Run `nix develop --command pnpm install`
 - **Commit message format errors:** Use conventional commit format (feat:, fix:, chore:, etc.)
-- **Git hooks taking time:** Pre-commit hooks run prettier + eslint and can take 30-60 seconds
-
-### Command Timing Reference
-
-**Critical timing information for CI/CD and development:**
-
-- **Initial Nix environment setup:** 30-90 seconds (first time only)
-- **Dependency installation:** 30-60 seconds (`pnpm install`)
-- **TypeScript compilation:** ~9 seconds (`pnpm compile`)
-- **Linting:** ~1-2 seconds (`pnpm run lint`)
-- **Formatting:** ~3 seconds (`pnpm run format`)
-- **Testing:** ~4-5 seconds (`pnpm test`)
-- **Cleaning build cache:** ~2 seconds (`pnpm run clean:cache`)
-- **Git commit with hooks:** 30-60 seconds (includes lint-staged)
+- **Git hooks taking time:** Pre-commit hooks run prettier + eslint and may take time to complete
 
 ### Environment Validation
 
