@@ -9,6 +9,10 @@ jobs:
   review-docs:
     runs-on: ubuntu-latest
     steps:
+      - name: Verify GH authentication
+        run: gh auth status
+        env:
+          GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
       - name: Trigger Copilot Agent
         run: |
           gh agent-task create \
