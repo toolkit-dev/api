@@ -27,4 +27,4 @@ jobs:
           gh agent-task create \
             "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN != '' && secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
