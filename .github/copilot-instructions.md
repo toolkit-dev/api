@@ -17,7 +17,7 @@
 
 ### Prerequisites
 
-This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](AGENTS.md) for critical requirements about command execution.**
+This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](../AGENTS.md) for critical requirements about command execution.**
 
 **All commands must be prefixed with `nix develop --command`** to access the development environment. This prefix provides Node.js, pnpm, and all development tools (exact versions defined in flake.nix).
 
@@ -279,7 +279,7 @@ nix develop --command git commit -m "test: verify hooks" --dry-run
 
 ## For AI Coding Agents
 
-**See [AGENTS.md](AGENTS.md) for critical requirements about working with the Nix environment.**
+**See [AGENTS.md](../AGENTS.md) for critical requirements about working with the Nix environment.**
 
 Key points:
 
