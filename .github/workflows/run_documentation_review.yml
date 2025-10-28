@@ -5,13 +5,26 @@ on:
     - cron: "0 8 * * *" # Midnight PT = 8 AM UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: write
+
 jobs:
   review-docs:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Note: gh agent-task create requires OAuth token, not standard GITHUB_TOKEN
+      # If PAT_TOKEN secret is configured with appropriate permissions, it will be used
+      # Otherwise, attempts will be made with GITHUB_TOKEN (may fail with auth error)
+      # See: https://github.com/cli/cli/issues/11845
       - name: Trigger Copilot Agent
         run: |
           gh agent-task create \
             "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN != '' && secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
