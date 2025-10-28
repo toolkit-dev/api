@@ -17,7 +17,7 @@
 
 ### Prerequisites
 
-This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](AGENTS.md) for critical requirements about command execution.**
+This repository requires Nix for development environment management. **If you are an AI coding agent, see [AGENTS.md](../AGENTS.md) for critical requirements about command execution.**
 
 **All commands must be prefixed with `nix develop --command`** to access the development environment. This prefix provides Node.js, pnpm, and all development tools (exact versions defined in flake.nix).
 
@@ -172,20 +172,30 @@ nix develop --command find packages -name "package.json" -exec dirname {} \;
 ### Specific Package Details
 
 **Core packages by type:**
+
 - **@jsonapi/types** - Base JSON:API TypeScript types
 - **@jsonapi/parser** - JSON:API document parsing
-- **@jsonapi/serializer** - JSON:API document serialization  
+- **@jsonapi/serializer** - JSON:API document serialization
 - **@jsonapi/zod** - Zod integration for JSON:API validation
 - **@toolkit-dev/openapi-core** - Core OpenAPI utilities
 - **@toolkit-dev/openapi-server-hono** - Hono server integration
 - **@toolkit-dev/openapi-client-fetch** - Fetch-based client
 - **@toolkit-dev/openapi-document-zod** - OpenAPI document validation
+- **@toolkit-dev/openapi-standard-schema** - OpenAPI Standard Schema integration
 - **@toolkit-dev/react-query-jsonapi** - React Query + JSON:API
 - **@toolkit-dev/react-query-fetch** - React Query + fetch client
+- **@toolkit-dev/errors** - Core error handling utilities
 
 **Examples:**
+
 - **@toolkit-dev/examples-backend** - Demo Hono server
 - **@toolkit-dev/examples-frontend** - Demo React frontend
+
+**Configuration packages:**
+
+- **@toolkit-dev/eslintconfig** - Shared ESLint configuration
+- **@toolkit-dev/tsconfig** - Shared TypeScript configurations
+- **@toolkit-dev/viteconfig** - Shared Vite configuration
 
 ### Key Configuration Files
 
@@ -263,7 +273,7 @@ nix develop --command pnpm test
 
 # Test git hooks work correctly
 nix develop --command git status
-nix develop --command git add . 
+nix develop --command git add .
 nix develop --command git commit -m "test: verify hooks" --dry-run
 ```
 
@@ -282,15 +292,18 @@ Key points:
 ### Making Code Changes
 
 1. **Start development server (optional):**
+
    ```bash
    nix develop --command pnpm dev
    ```
+
    - Auto-compiles on file changes
    - Starts backend server on port 3000
 
 2. **Make changes to source files**
 
 3. **Validate changes:**
+
    ```bash
    nix develop --command pnpm compile
    nix develop --command pnpm run lint
@@ -306,6 +319,7 @@ Key points:
 ### Adding New Dependencies
 
 1. **Add to appropriate package.json:**
+
    ```bash
    nix develop --command pnpm --filter <package-name> add <dependency>
    ```
@@ -319,11 +333,13 @@ Key points:
 ### Debugging Build Issues
 
 1. **Check for TypeScript errors:**
+
    ```bash
    nix develop --command pnpm compile --verbose
    ```
 
 2. **Check individual package:**
+
    ```bash
    nix develop --command pnpm --filter <package-name> run compile
    ```
