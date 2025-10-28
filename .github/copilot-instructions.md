@@ -253,7 +253,7 @@ Server should start on port 3000.
 - **Command not found errors:** Ensure you're using the `nix develop --command` prefix
 - **Husky pre-commit failures:** Git hooks require the Nix environment; ensure the prefix is used
 - **Missing dependencies:** Run `nix develop --command pnpm install`
-- **Commit message format errors:** **MANDATORY:** Use conventional commit format (feat:, fix:, chore:, etc.) - git hooks will reject non-conventional commits
+- **Commit message format errors:** Use conventional commit format (feat:, fix:, chore:, etc.)
 - **Git hooks taking time:** Pre-commit hooks run prettier + eslint and may take time to complete
 
 ### Environment Validation

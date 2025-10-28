@@ -53,10 +53,6 @@ nix develop --command git commit -m "fixed bug"
 nix develop --command git commit -m "Updated docs"
 ```
 
-#### What Happens When You Don't Follow This
-
-Git commit hooks will **immediately fail** with an error from commitlint, and your commit will be rejected. This is not optional - the repository enforces this automatically.
-
 ### Command Execution Requirement
 
 **EVERY bash command you execute must use the `nix develop --command` prefix.**
@@ -87,7 +83,7 @@ nix develop --command pnpm run lint
 # Version control
 nix develop --command git status
 nix develop --command git add .
-nix develop --command git commit -m "feat: implement feature"  # MUST use conventional format
+nix develop --command git commit -m "feat: implement feature"
 
 # TypeScript compilation
 nix develop --command pnpm compile
@@ -112,12 +108,9 @@ pnpm install
 # WRONG - Will fail - git hooks can't find pnpm
 git commit -m "changes"
 
-# WRONG - Will fail - missing conventional format (even with nix prefix)
-nix develop --command git commit -m "changes"
-
 # CORRECT - Will succeed
 nix develop --command pnpm install
-nix develop --command git commit -m "feat: add changes"
+nix develop --command git commit -m "changes"
 ```
 
 ## Environment Verification
@@ -130,7 +123,7 @@ nix develop --command node --version    # Should show v22.x.x
 nix develop --command pnpm --version    # Should show 10.x.x
 nix develop --command git --version     # Should work
 
-# Test git hooks work correctly (conventional commits)
+# Test git hooks work correctly
 nix develop --command bash -c "echo 'test' > test.txt"
 nix develop --command git add test.txt
 nix develop --command git commit -m "test: verify hooks"  # Should pass with conventional format
@@ -149,19 +142,23 @@ The hosting environment (GitHub Codespaces, local devcontainer, etc.) provides N
 
 Your agent must consistently remember and apply the `nix develop --command` prefix. This is the single most important requirement for working with this repository.
 
-### Error Recovery
+### Command Not Found Errors
 
 If you see errors like:
 
 - "command not found: pnpm"
 - "command not found: node"
+
+The solution is always: ensure you're using the `nix develop --command` prefix.
+
+### Git Commit Errors
+
+If you see errors like:
+
 - Git commit hooks failing with "commitlint" errors
 - "subject may not be empty" or "type may not be empty" commit errors
 
-The solutions are:
-
-1. **For command not found errors:** ensure you're using the `nix develop --command` prefix
-2. **For commit errors:** ensure you're using conventional commit format (e.g., `feat:`, `fix:`, `chore:`)
+The solution is: ensure you're using conventional commit format (e.g., `feat:`, `fix:`, `chore:`)
 
 ### Shell Context
 
@@ -172,7 +169,6 @@ nix develop --command bash
 # Now inside Nix shell, commands work without prefix
 pnpm install
 git status
-git commit -m "feat: describe change"  # Still must use conventional format
 exit  # Leave Nix shell
 ```
 
