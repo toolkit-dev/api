@@ -16,15 +16,9 @@ jobs:
       - name: Create Copilot Review Issue
         run: |
           gh issue create \
+            --repo "${{ github.repository }}" \
             --title "Review documentation accuracy" \
             --body "Please review .github/copilot-instructions.md for accuracy against the current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed." \
-            --assignee copilot \
-            --label "automated"
+            --assignee "@copilot"
         env:
           GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
-      # - name: Trigger Copilot Agent
-      #   run: |
-      #     gh agent-task create \
-      #       "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
