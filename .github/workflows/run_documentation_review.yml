@@ -1,9 +1,9 @@
 name: Daily Documentation Review
 
 on:
-  schedule:
-    - cron: "0 8 * * *" # Midnight PT = 8 AM UTC
-  workflow_dispatch:
+  push:
+    branches:
+      - jarid/fix-documentation-review-workflow
 
 jobs:
   review-docs:
@@ -14,4 +14,4 @@ jobs:
           gh agent-task create \
             "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
