@@ -57,8 +57,6 @@ nix develop --command git commit -m "Updated docs"
 
 Git commit hooks will **immediately fail** with an error from commitlint, and your commit will be rejected. This is not optional - the repository enforces this automatically.
 
-This repository uses Nix for development environment management. All development tools (Node.js, pnpm, git hooks) are provided through Nix.
-
 ### Command Execution Requirement
 
 **EVERY bash command you execute must use the `nix develop --command` prefix.**
