@@ -33,8 +33,6 @@ This package does **not** include the traditional OpenAPI schema types that are 
 - Allows you to define your API shape once using your validation library of choice (Zod, Yup, etc.)
 - Enables references to be created at compile time when generating OpenAPI spec files, rather than being managed in the type system
 
-If you need to reference schemas, use the `ReferenceObject` type which remains available for components that genuinely need reference semantics (like reusable responses or request bodies).
-
 ### Parameters
 
 Instead of OpenAPI's array of parameters, we group them by where they live: `query`, `path`, `header`, or `cookie`. Each group becomes a StandardSchema object where:
