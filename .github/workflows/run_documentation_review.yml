@@ -18,7 +18,25 @@ jobs:
           gh issue create \
             --repo "${{ github.repository }}" \
             --title "Review documentation accuracy" \
-            --body "Please review .github/copilot-instructions.md for accuracy against the current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed." \
+            --body "Please review .github/copilot-instructions.md for accuracy
+          against the current repository state.
+
+          Check for substantive gaps or mismatches in:
+          - Version references (Node.js, pnpm, package versions)
+          - Package counts and structure descriptions
+          - Command examples and workflows
+          - Dependencies and configuration files
+          - Build processes and development setup
+
+          IMPORTANT: Only create a PR if you find real content gaps or
+          mismatches that affect functionality or accuracy. Do NOT create
+          PRs for:
+          - Minor wording changes or style improvements
+          - Superficial formatting adjustments
+          - Cosmetic updates that don't change meaning
+
+          Focus on ensuring the documentation correctly reflects the actual
+          codebase state and functionality." \
             --assignee "@copilot"
         env:
           GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
