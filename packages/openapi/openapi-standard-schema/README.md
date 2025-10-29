@@ -16,6 +16,25 @@ Think of it as collapsing schema-heavy parts into StandardSchema while keeping t
 
 The following sections describe the specific changes made to support StandardSchema in place of OpenAPI schema objects.
 
+#### Removed Types
+
+This package does **not** include the traditional OpenAPI schema types that are found in standard OpenAPI specifications. The following types have been intentionally removed:
+
+- `SchemaObject` - Replaced by `StandardSchemaV1`
+- `BaseSchemaObject` - Replaced by `StandardSchemaV1`
+- `NonArraySchemaObject` - Replaced by `StandardSchemaV1`
+- `ArraySchemaObject` - Replaced by `StandardSchemaV1`
+- `DiscriminatorObject` - No longer needed with StandardSchema
+- `XMLObject` - No longer needed with StandardSchema
+
+**Why?** These OpenAPI-specific schema types add complexity and duplication. Instead, we use `StandardSchemaV1` directly everywhere a schema is needed. This approach:
+
+- Eliminates the need for type conversions between OpenAPI schemas and validation schemas
+- Allows you to define your API shape once using your validation library of choice (Zod, Yup, etc.)
+- Enables references to be created at compile time when generating OpenAPI spec files, rather than being managed in the type system
+
+If you need to reference schemas, use the `ReferenceObject` type which remains available for components that genuinely need reference semantics (like reusable responses or request bodies).
+
 ### Parameters
 
 Instead of OpenAPI's array of parameters, we group them by where they live: `query`, `path`, `header`, or `cookie`. Each group becomes a StandardSchema object where:
