@@ -949,7 +949,7 @@ export namespace OpenAPIV3_0 {
     /**
      * An object to hold reusable Parameters Objects.
      */
-    parameters?: { [key: string]: ParametersObject };
+    parameters?: { [key: string]: ReferenceObject | ParametersObject };
     /**
      * An object to hold reusable Example Objects.
      */
