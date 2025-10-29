@@ -108,7 +108,6 @@ nix develop --command pnpm test
 ```
 
 - Runs vitest for all packages with tests
-- Currently tests 8 test cases across 5 test files
 
 **Test specific packages:**
 
