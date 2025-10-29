@@ -89,16 +89,14 @@ Whether you're defining reusable components or inline schemas, they're all Stand
 
 ### Headers
 
-Response headers use StandardSchema to define their data shape. We simplify the header definition by focusing on the schema rather than serialization details.
+Response headers map directly to StandardSchema types. Metadata like descriptions can be tracked on the schema's metadata (e.g., Zod's `.describe()` method).
 
 ```typescript
-// Headers with StandardSchema
+// Headers map directly to StandardSchemaV1
 {
   headers: {
-    "X-Rate-Limit": {
-      description: "Rate limit remaining";
-      schema: StandardSchemaV1;
-    }
+    "X-Rate-Limit": StandardSchemaV1;
+    "X-Request-Id": StandardSchemaV1;
   }
 }
 ```

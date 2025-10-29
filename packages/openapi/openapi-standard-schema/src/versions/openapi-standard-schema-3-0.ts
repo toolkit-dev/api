@@ -398,30 +398,6 @@ export namespace OpenAPIV3_0 {
   }
 
   /**
-   * Header Object
-   *
-   * Describes a header that can be used in responses.
-   * This is simplified compared to the standard OpenAPI specification
-   * as we focus on the data shape via StandardSchema.
-   */
-  export interface HeaderObject extends SpecificationExtension {
-    /**
-     * A brief description of the header. This could contain examples of use.
-     * CommonMark syntax MAY be used for rich text representation.
-     */
-    description?: string;
-    /**
-     * Specifies that a header is deprecated and SHOULD be transitioned
-     * out of usage.
-     */
-    deprecated?: boolean;
-    /**
-     * The schema defining the type used for the header.
-     */
-    schema?: StandardSchemaV1;
-  }
-
-  /**
    * Request Body Object
    *
    * Describes a single request body. Each media type maps directly to a
@@ -486,8 +462,9 @@ export namespace OpenAPIV3_0 {
     contentType?: string;
     /**
      * A map allowing additional information to be provided as headers.
+     * Each header is defined using StandardSchemaV1.
      */
-    headers?: { [header: string]: ReferenceObject | HeaderObject };
+    headers?: { [header: string]: StandardSchemaV1 };
     /**
      * Describes how a specific property value will be serialized depending
      * on its type.
@@ -535,9 +512,9 @@ export namespace OpenAPIV3_0 {
     description: string;
     /**
      * Maps a header name to its definition. RFC7230 states header names
-     * are case insensitive.
+     * are case insensitive. Each header is defined using StandardSchemaV1.
      */
-    headers?: { [header: string]: ReferenceObject | HeaderObject };
+    headers?: { [header: string]: StandardSchemaV1 };
     /**
      * A map containing descriptions of potential response payloads. The key
      * is a media type or media type range and the value is a StandardSchemaV1
@@ -959,9 +936,10 @@ export namespace OpenAPIV3_0 {
      */
     requestBodies?: { [key: string]: ReferenceObject | RequestBodyObject };
     /**
-     * An object to hold reusable Header Objects.
+     * An object to hold reusable headers. Each header is defined using
+     * StandardSchemaV1.
      */
-    headers?: { [key: string]: ReferenceObject | HeaderObject };
+    headers?: { [key: string]: StandardSchemaV1 };
     /**
      * An object to hold reusable Security Scheme Objects.
      */
