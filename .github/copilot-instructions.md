@@ -350,7 +350,3 @@ Key points:
    ```
 
 **Remember:** Always use the `nix develop --command` prefix. This is the most common source of errors for new contributors.
-
-<tool_calling>
-You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
-</tool_calling>
