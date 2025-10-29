@@ -29,7 +29,7 @@ This repository uses commitlint with husky pre-commit hooks that enforce convent
 #### Mandatory Types
 
 - `feat:` - New features
-- `fix:` - Bug fixes  
+- `fix:` - Bug fixes
 - `chore:` - Maintenance tasks
 - `docs:` - Documentation changes
 - `test:` - Adding or updating tests
@@ -43,7 +43,7 @@ This repository uses commitlint with husky pre-commit hooks that enforce convent
 ```bash
 # CORRECT - Will pass git hooks
 nix develop --command git commit -m "feat: add new JSON API parser"
-nix develop --command git commit -m "fix: resolve memory leak in serializer"  
+nix develop --command git commit -m "fix: resolve memory leak in serializer"
 nix develop --command git commit -m "docs: update installation instructions"
 nix develop --command git commit -m "chore: update dependencies"
 
