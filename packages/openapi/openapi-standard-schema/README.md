@@ -86,3 +86,19 @@ Whether you're defining reusable components or inline schemas, they're all Stand
   }
 }
 ```
+
+### Headers
+
+Response headers use StandardSchema to define their data shape. We simplify the header definition by focusing on the schema rather than serialization details.
+
+```typescript
+// Headers with StandardSchema
+{
+  headers: {
+    "X-Rate-Limit": {
+      description: "Rate limit remaining";
+      schema: StandardSchemaV1;
+    }
+  }
+}
+```
