@@ -4,9 +4,54 @@ This document provides critical environment requirements for AI coding agents (G
 
 **For complete operational guidance** on working with this codebase (build commands, architecture, workflows), see [copilot-instructions.md](copilot-instructions.md).
 
-## Critical Requirement: Nix Environment
+## Critical Requirements
+
+### 1. Nix Environment
 
 This repository uses Nix for development environment management. All development tools (Node.js, pnpm, git hooks) are provided through Nix.
+
+### 2. Conventional Commits (MANDATORY)
+
+**ALL commits in this repository MUST use conventional commit format. Git hooks will FAIL if this is not followed.**
+
+This repository uses commitlint with husky pre-commit hooks that enforce conventional commit message standards. Commits that do not follow the conventional format will be **automatically rejected**.
+
+#### Required Format
+
+```
+<type>: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+#### Mandatory Types
+
+- `feat:` - New features
+- `fix:` - Bug fixes  
+- `chore:` - Maintenance tasks
+- `docs:` - Documentation changes
+- `test:` - Adding or updating tests
+- `refactor:` - Code refactoring
+- `style:` - Code style changes
+- `ci:` - CI/CD changes
+- `perf:` - Performance improvements
+
+#### Examples
+
+```bash
+# CORRECT - Will pass git hooks
+nix develop --command git commit -m "feat: add new JSON API parser"
+nix develop --command git commit -m "fix: resolve memory leak in serializer"  
+nix develop --command git commit -m "docs: update installation instructions"
+nix develop --command git commit -m "chore: update dependencies"
+
+# WRONG - Will FAIL git hooks
+nix develop --command git commit -m "added new feature"
+nix develop --command git commit -m "fixed bug"
+nix develop --command git commit -m "Updated docs"
+```
 
 ### Command Execution Requirement
 
@@ -38,7 +83,7 @@ nix develop --command pnpm run lint
 # Version control
 nix develop --command git status
 nix develop --command git add .
-nix develop --command git commit -m "implement feature"
+nix develop --command git commit -m "feat: implement feature"
 
 # TypeScript compilation
 nix develop --command pnpm compile
@@ -81,10 +126,10 @@ nix develop --command git --version     # Should work
 # Test git hooks work correctly
 nix develop --command bash -c "echo 'test' > test.txt"
 nix develop --command git add test.txt
-nix develop --command git commit -m "test commit"  # Should trigger husky hooks
-nix develop --command git reset --soft HEAD~1      # Undo test commit
-nix develop --command git reset HEAD test.txt      # Unstage
-nix develop --command rm test.txt                  # Clean up
+nix develop --command git commit -m "test: verify hooks"  # Should pass with conventional format
+nix develop --command git reset --soft HEAD~1            # Undo test commit
+nix develop --command git reset HEAD test.txt            # Unstage
+nix develop --command rm test.txt                        # Clean up
 ```
 
 ## Important Notes for AI Agents
@@ -97,15 +142,23 @@ The hosting environment (GitHub Codespaces, local devcontainer, etc.) provides N
 
 Your agent must consistently remember and apply the `nix develop --command` prefix. This is the single most important requirement for working with this repository.
 
-### Error Recovery
+### Command Not Found Errors
 
 If you see errors like:
 
 - "command not found: pnpm"
 - "command not found: node"
-- Git commit hooks failing
 
 The solution is always: ensure you're using the `nix develop --command` prefix.
+
+### Git Commit Errors
+
+If you see errors like:
+
+- Git commit hooks failing with "commitlint" errors
+- "subject may not be empty" or "type may not be empty" commit errors
+
+The solution is: ensure you're using conventional commit format (e.g., `feat:`, `fix:`, `chore:`)
 
 ### Shell Context
 

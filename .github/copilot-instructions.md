@@ -123,7 +123,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run test
 3. Lint frequently: `nix develop --command pnpm run lint`
 4. Test individual packages: `nix develop --command pnpm --filter <package-name> run test`
 5. Run example server: `nix develop --command pnpm --filter @toolkit-dev/examples-backend run start`
-6. Commit (pre-commit hooks will run Prettier and ESLint automatically)
+6. Commit using conventional format (pre-commit hooks will run Prettier, ESLint, and commitlint automatically)
 
 ### Common Development Patterns
 
@@ -310,7 +310,7 @@ Key points:
    nix develop --command pnpm test
    ```
 
-4. **Commit changes:**
+4. **Commit changes (MUST use conventional format):**
    ```bash
    nix develop --command git add .
    nix develop --command git commit -m "feat: describe your change"
