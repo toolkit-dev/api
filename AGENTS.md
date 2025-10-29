@@ -94,7 +94,7 @@ nix develop --command pnpm --filter @toolkit-dev/examples-backend run start
 
 ## Why This Approach Is Required
 
-1. **Environment Isolation:** Node.js 22 and pnpm 10 are only available inside the Nix environment
+1. **Environment Isolation:** Node.js 24 and pnpm 10 are only available inside the Nix environment
 2. **Git Hooks:** Husky pre-commit hooks need pnpm to run lint-staged. Without the prefix, git commits will fail
 3. **Consistent Tooling:** Ensures all agents use the exact same tool versions
 4. **No System Dependencies:** The host system may not have Node.js or pnpm installed
@@ -119,7 +119,7 @@ If you encounter issues, verify the environment is working correctly:
 
 ```bash
 # Check tool versions
-nix develop --command node --version    # Should show v22.x.x
+nix develop --command node --version    # Should show v24.x.x
 nix develop --command pnpm --version    # Should show 10.x.x
 nix develop --command git --version     # Should work
 
