@@ -28,7 +28,7 @@ jobs:
           - Dependencies and configuration files
           - Build processes and development setup
 
-          IMPORTANT: Only create a PR if you find real content gaps or
+          IMPORTANT: Only make changes if you find real content gaps or
           mismatches that affect functionality or accuracy. Do NOT create
           PRs for:
           - Minor wording changes or style improvements
@@ -38,11 +38,7 @@ jobs:
           Focus on ensuring the documentation correctly reflects the actual
           codebase state and functionality.
 
-          When creating a PR for documentation updates, IMPORTANT: The PR
-          title SHOULD NOT include the issue number (e.g., avoid 'fixes #123'
-          or 'closes #456'). This prevents the issue from being automatically
-          closed when the PR is merged, allowing for ongoing documentation
-          review cycles." \
+          If no changes are needed, close the PR without merging." \
             --assignee "@copilot"
         env:
           GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
