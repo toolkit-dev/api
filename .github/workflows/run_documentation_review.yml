@@ -1,9 +1,6 @@
 name: Daily Documentation Review
 
 on:
-  push:
-    branches:
-      - jarid/fix-documentation-review-workflow
   workflow_dispatch:
 
 jobs:
@@ -14,6 +11,10 @@ jobs:
         run: gh auth status
         env:
           GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
+      # We create an issue assigned to Copilot. This is required because the
+      # gh agent-task create command currently only supports authentication via
+      # an OAuth token which cannot be obtained from Github Actions.
+      # Ref: https://github.com/cli/cli/issues/11845
       - name: Create Copilot Review Issue
         run: |
           gh issue create \
