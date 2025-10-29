@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - jarid/fix-documentation-review-workflow
+  workflow_dispatch:
 
 jobs:
   review-docs:
