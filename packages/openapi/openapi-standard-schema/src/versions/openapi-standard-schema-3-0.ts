@@ -1,14 +1,17 @@
 /**
- * OpenAPI 3.0.4 TypeScript Type Definitions
+ * OpenAPI 3.0.4 TypeScript Type Definitions with StandardSchema Support
  *
  * This file contains comprehensive TypeScript type definitions for the
- * OpenAPI Specification v3.0.4. Portions of the documentation text are
+ * OpenAPI Specification v3.0.4, modified to use StandardSchema types
+ * in place of OpenAPI schema objects. Portions of the documentation text are
  * derived from the OpenAPI Specification v3.0.4, which is licensed under
  * the Apache License 2.0.
  *
  * OpenAPI Specification: https://spec.openapis.org/oas/v3.0.4
  * License: https://github.com/OAI/OpenAPI-Specification/blob/main/LICENSE
  */
+
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 
 export namespace OpenAPIV3_0 {
   /**
@@ -246,10 +249,10 @@ export namespace OpenAPIV3_0 {
      */
     servers?: ServerObject[];
     /**
-     * A list of parameters that are applicable for all the operations under
-     * this path.
+     * Parameters that are applicable for all the operations under this path,
+     * grouped by location (query, path, header, cookie).
      */
-    parameters?: (ReferenceObject | ParameterObject)[];
+    parameters?: ParametersObject;
     /**
      * A definition of a GET operation on this path.
      */
@@ -314,9 +317,10 @@ export namespace OpenAPIV3_0 {
      */
     operationId?: string;
     /**
-     * A list of parameters that are applicable for this operation.
+     * Parameters that are applicable for this operation, grouped by location
+     * (query, path, header, cookie).
      */
-    parameters?: (ReferenceObject | ParameterObject)[];
+    parameters?: ParametersObject;
     /**
      * The request body applicable for this operation.
      */
@@ -366,108 +370,38 @@ export namespace OpenAPIV3_0 {
   }
 
   /**
-   * Parameter Object
+   * Parameters Object
    *
-   * Describes a single operation parameter.
+   * Groups parameters by their location (query, path, header, cookie).
+   * Each group is represented as a StandardSchema where property names
+   * correspond to parameter names.
    */
-  export interface ParameterObject extends ParameterBaseObject {
+  export interface ParametersObject extends SpecificationExtension {
     /**
-     * The name of the parameter. Parameter names are case sensitive.
+     * Query parameters as a StandardSchema object.
      */
-    name: string;
+    query?: StandardSchemaV1;
     /**
-     * The location of the parameter. Possible values are "query", "header",
-     * "path" or "cookie".
+     * Path parameters as a StandardSchema object.
+     * Required parameters are represented without optional modifiers,
+     * optional parameters use optional modifiers.
      */
-    in: "query" | "header" | "path" | "cookie";
+    path?: StandardSchemaV1;
     /**
-     * Determines whether this parameter is mandatory. If the parameter
-     * location is "path", this property is required and its value MUST be true.
+     * Header parameters as a StandardSchema object.
      */
-    required?: boolean;
-  }
-
-  /**
-   * Header Object
-   *
-   * The Header Object follows the structure of the Parameter Object with the
-   * following changes:
-   * 1. name MUST NOT be specified, it is given in the corresponding headers
-   *    map.
-   * 2. in MUST NOT be specified, it is implicitly in header.
-   * 3. All traits that are affected by the location MUST be applicable to a
-   *    location of header (for example, style).
-   */
-  export type HeaderObject = Omit<ParameterBaseObject, "allowEmptyValue">;
-
-  /**
-   * Base Parameter Object
-   *
-   * Common properties shared between Parameter and Header objects.
-   */
-  export interface ParameterBaseObject extends SpecificationExtension {
+    header?: StandardSchemaV1;
     /**
-     * A brief description of the parameter. This could contain examples of use.
-     * CommonMark syntax MAY be used for rich text representation.
+     * Cookie parameters as a StandardSchema object.
      */
-    description?: string;
-    /**
-     * Specifies that a parameter is deprecated and SHOULD be transitioned
-     * out of usage.
-     */
-    deprecated?: boolean;
-    /**
-     * Sets the ability to pass empty-valued parameters. This is valid only for
-     * query parameters and allows sending a parameter with an empty value.
-     */
-    allowEmptyValue?: boolean;
-    /**
-     * Describes how the parameter value will be serialized depending on the
-     * type of the parameter value.
-     */
-    style?:
-      | "matrix"
-      | "label"
-      | "form"
-      | "simple"
-      | "spaceDelimited"
-      | "pipeDelimited"
-      | "deepObject";
-    /**
-     * When this is true, parameter values of type array or object generate
-     * separate parameters for each value of the array or key-value pair of
-     * the map.
-     */
-    explode?: boolean;
-    /**
-     * Determines whether the parameter value SHOULD allow reserved characters,
-     * as defined by RFC3986.
-     */
-    allowReserved?: boolean;
-    /**
-     * The schema defining the type used for the parameter.
-     */
-    schema?: ReferenceObject | SchemaObject;
-    /**
-     * Example of the parameter's potential value.
-     */
-    example?: any;
-    /**
-     * Examples of the parameter's potential value. Each example SHOULD contain
-     * a value in the correct format as specified in the parameter encoding.
-     */
-    examples?: { [name: string]: ReferenceObject | ExampleObject };
-    /**
-     * A map containing the representations for the parameter. The key is the
-     * media type and the value describes it.
-     */
-    content?: { [media: string]: MediaTypeObject };
+    cookie?: StandardSchemaV1;
   }
 
   /**
    * Request Body Object
    *
-   * Describes a single request body.
+   * Describes a single request body. Each media type maps directly to a
+   * StandardSchemaV1 describing the request body shape.
    */
   export interface RequestBodyObject extends SpecificationExtension {
     /**
@@ -477,9 +411,9 @@ export namespace OpenAPIV3_0 {
     description?: string;
     /**
      * The content of the request body. The key is a media type or media type
-     * range and the value describes it.
+     * range and the value is a StandardSchemaV1 describing the request body.
      */
-    content: { [media: string]: MediaTypeObject };
+    content: { [media: string]: StandardSchemaV1 };
     /**
      * Determines if the request body is required in the request. Defaults
      * to false.
@@ -491,13 +425,14 @@ export namespace OpenAPIV3_0 {
    * Media Type Object
    *
    * Each Media Type Object provides schema and examples for the media type
-   * identified by its key.
+   * identified by its key. The schema is represented as a StandardSchemaV1.
    */
   export interface MediaTypeObject extends SpecificationExtension {
     /**
      * The schema defining the content of the request, response, or parameter.
+     * Uses StandardSchemaV1 to describe the data shape.
      */
-    schema?: ReferenceObject | SchemaObject;
+    schema?: StandardSchemaV1;
     /**
      * Example of the media type.
      */
@@ -527,8 +462,9 @@ export namespace OpenAPIV3_0 {
     contentType?: string;
     /**
      * A map allowing additional information to be provided as headers.
+     * Each header is defined using StandardSchemaV1.
      */
-    headers?: { [header: string]: ReferenceObject | HeaderObject };
+    headers?: { [header: string]: StandardSchemaV1 };
     /**
      * Describes how a specific property value will be serialized depending
      * on its type.
@@ -565,8 +501,8 @@ export namespace OpenAPIV3_0 {
   /**
    * Response Object
    *
-   * Describes a single response from an API Operation, including design-time,
-   * static links to operations based on the response.
+   * Describes a single response from an API Operation. Each media type maps
+   * directly to a StandardSchemaV1 describing the response shape.
    */
   export interface ResponseObject extends SpecificationExtension {
     /**
@@ -576,14 +512,15 @@ export namespace OpenAPIV3_0 {
     description: string;
     /**
      * Maps a header name to its definition. RFC7230 states header names
-     * are case insensitive.
+     * are case insensitive. Each header is defined using StandardSchemaV1.
      */
-    headers?: { [header: string]: ReferenceObject | HeaderObject };
+    headers?: { [header: string]: StandardSchemaV1 };
     /**
      * A map containing descriptions of potential response payloads. The key
-     * is a media type or media type range and the value describes it.
+     * is a media type or media type range and the value is a StandardSchemaV1
+     * describing the response body.
      */
-    content?: { [media: string]: MediaTypeObject };
+    content?: { [media: string]: StandardSchemaV1 };
     /**
      * A map of operations links that can be followed from the response.
      * The key of the map is a short name for the link.
@@ -978,17 +915,18 @@ export namespace OpenAPIV3_0 {
    */
   export interface ComponentsObject extends SpecificationExtension {
     /**
-     * An object to hold reusable Schema Objects.
+     * An object to hold reusable schemas. Each schema is represented as
+     * a StandardSchemaV1.
      */
-    schemas?: { [key: string]: ReferenceObject | SchemaObject };
+    schemas?: { [key: string]: StandardSchemaV1 };
     /**
      * An object to hold reusable Response Objects.
      */
     responses?: { [key: string]: ReferenceObject | ResponseObject };
     /**
-     * An object to hold reusable Parameter Objects.
+     * An object to hold reusable Parameters Objects.
      */
-    parameters?: { [key: string]: ReferenceObject | ParameterObject };
+    parameters?: { [key: string]: ReferenceObject | ParametersObject };
     /**
      * An object to hold reusable Example Objects.
      */
@@ -998,9 +936,10 @@ export namespace OpenAPIV3_0 {
      */
     requestBodies?: { [key: string]: ReferenceObject | RequestBodyObject };
     /**
-     * An object to hold reusable Header Objects.
+     * An object to hold reusable headers. Each header is defined using
+     * StandardSchemaV1.
      */
-    headers?: { [key: string]: ReferenceObject | HeaderObject };
+    headers?: { [key: string]: StandardSchemaV1 };
     /**
      * An object to hold reusable Security Scheme Objects.
      */
