@@ -225,14 +225,11 @@ export namespace OpenAPIV3_0 {
    * Path Item Object
    *
    * Describes the operations available on a single path. A Path Item MAY be
-   * empty, due to ACL constraints.
+   * empty, due to ACL constraints. When defining schemas in code, reusable
+   * path items can be referenced directly rather than using string-based
+   * references.
    */
   export interface PathItemObject extends SpecificationExtension {
-    /**
-     * Allows for an external definition of this path item. The referenced
-     * structure MUST be in the format of a Path Item Object.
-     */
-    $ref?: string;
     /**
      * An optional, string summary, intended to apply to all operations in
      * this path.
@@ -324,7 +321,7 @@ export namespace OpenAPIV3_0 {
     /**
      * The request body applicable for this operation.
      */
-    requestBody?: ReferenceObject | RequestBodyObject;
+    requestBody?: RequestBodyObject;
     /**
      * The list of possible responses as they are returned from
      * executing this operation.
@@ -334,7 +331,7 @@ export namespace OpenAPIV3_0 {
      * A map of possible out-of band callbacks related to the parent
      * operation.
      */
-    callbacks?: { [callback: string]: ReferenceObject | CallbackObject };
+    callbacks?: { [callback: string]: CallbackObject };
     /**
      * Declares this operation to be deprecated. Consumers SHOULD refrain
      * from usage of the declared operation.
@@ -411,9 +408,9 @@ export namespace OpenAPIV3_0 {
     description?: string;
     /**
      * The content of the request body. The key is a media type or media type
-     * range and the value is a StandardSchemaV1 describing the request body.
+     * range and the value is a MediaTypeObject containing a StandardSchemaV1.
      */
-    content: { [media: string]: StandardSchemaV1 };
+    content: { [media: string]: MediaTypeObject };
     /**
      * Determines if the request body is required in the request. Defaults
      * to false.
@@ -441,7 +438,7 @@ export namespace OpenAPIV3_0 {
      * Examples of the media type. Each example object SHOULD match the media
      * type and specified schema if present.
      */
-    examples?: { [name: string]: ReferenceObject | ExampleObject };
+    examples?: { [name: string]: ExampleObject };
     /**
      * A map between a property name and its encoding information. The key,
      * being the property name, MUST exist in the schema as a property.
@@ -495,8 +492,8 @@ export namespace OpenAPIV3_0 {
    * a HTTP response code to the expected response.
    */
   export type ResponsesObject = SpecificationExtension & {
-    default?: ReferenceObject | ResponseObject;
-  } & { [status in HttpStatusCode]?: ReferenceObject | ResponseObject };
+    default?: ResponseObject;
+  } & { [status in HttpStatusCode]?: ResponseObject };
 
   /**
    * Response Object
@@ -517,15 +514,15 @@ export namespace OpenAPIV3_0 {
     headers?: { [header: string]: StandardSchemaV1 };
     /**
      * A map containing descriptions of potential response payloads. The key
-     * is a media type or media type range and the value is a StandardSchemaV1
-     * describing the response body.
+     * is a media type or media type range and the value is a MediaTypeObject
+     * containing a StandardSchemaV1.
      */
-    content?: { [media: string]: StandardSchemaV1 };
+    content?: { [media: string]: MediaTypeObject };
     /**
      * A map of operations links that can be followed from the response.
      * The key of the map is a short name for the link.
      */
-    links?: { [link: string]: ReferenceObject | LinkObject };
+    links?: { [link: string]: LinkObject };
   }
 
   /**
@@ -614,283 +611,6 @@ export namespace OpenAPIV3_0 {
   }
 
   /**
-   * Reference Object
-   *
-   * A simple object to allow referencing other components in the
-   * specification, internally and externally.
-   */
-  export interface ReferenceObject extends SpecificationExtension {
-    /**
-     * The reference string.
-     */
-    $ref: string;
-  }
-
-  /**
-   * Schema Object
-   *
-   * The Schema Object allows the definition of input and output data types.
-   * These types can be objects, but also primitives and arrays.
-   */
-  export type SchemaObject = NonArraySchemaObject | ArraySchemaObject;
-
-  /**
-   * Base Schema Object
-   *
-   * Common properties for all schema objects, based on JSON Schema Draft 7
-   * with OpenAPI-specific extensions.
-   */
-  export interface BaseSchemaObject extends SpecificationExtension {
-    /**
-     * Can be used to decorate a user interface with information about
-     * the data produced by this user interface.
-     */
-    title?: string;
-    /**
-     * A description will provide explanation about the purpose of the
-     * instance described by this schema.
-     */
-    description?: string;
-    /**
-     * See JSON Schema Core and JSON Schema Validation for more information
-     * about the use of default.
-     */
-    default?: any;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * multipleOf.
-     */
-    multipleOf?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * maximum.
-     */
-    maximum?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * exclusiveMaximum.
-     */
-    exclusiveMaximum?: boolean;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * minimum.
-     */
-    minimum?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * exclusiveMinimum.
-     */
-    exclusiveMinimum?: boolean;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * maxLength.
-     */
-    maxLength?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * minLength.
-     */
-    minLength?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * pattern.
-     */
-    pattern?: string;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * maxItems.
-     */
-    maxItems?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * minItems.
-     */
-    minItems?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * uniqueItems.
-     */
-    uniqueItems?: boolean;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * maxProperties.
-     */
-    maxProperties?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * minProperties.
-     */
-    minProperties?: number;
-    /**
-     * See JSON Schema Validation for more information about the use of
-     * required.
-     */
-    required?: string[];
-    /**
-     * See JSON Schema Validation for more information about the use of enum.
-     */
-    enum?: any[];
-    /**
-     * Value can be an object or a boolean. When additionalProperties is true,
-     * the type of additional properties is unrestricted.
-     */
-    additionalProperties?: boolean | ReferenceObject | SchemaObject;
-    /**
-     * Property definitions MUST be a Schema Object and not a standard JSON
-     * Schema.
-     */
-    properties?: { [name: string]: ReferenceObject | SchemaObject };
-    /**
-     * Value MUST be an array. This array SHOULD have at least one element.
-     * Elements in the array SHOULD be unique.
-     */
-    allOf?: (ReferenceObject | SchemaObject)[];
-    /**
-     * Value MUST be an array. This array SHOULD have at least one element.
-     * Elements in the array SHOULD be unique.
-     */
-    oneOf?: (ReferenceObject | SchemaObject)[];
-    /**
-     * Value MUST be an array. This array SHOULD have at least one element.
-     * Elements in the array SHOULD be unique.
-     */
-    anyOf?: (ReferenceObject | SchemaObject)[];
-    /**
-     * This attribute is a schema that validates any instance that is not
-     * valid against the "not" schema.
-     */
-    not?: ReferenceObject | SchemaObject;
-    /**
-     * See Data Type Formats for further details. While relying on JSON Schema's
-     * defined formats, the OAS offers a few additional predefined formats.
-     */
-    format?: string;
-    /**
-     * Allows sending a null value for the defined schema. Default value is
-     * false.
-     */
-    nullable?: boolean;
-    /**
-     * Adds support for polymorphism. The discriminator is an object name that
-     * is used to differentiate between other schemas which may satisfy the
-     * payload description.
-     */
-    discriminator?: DiscriminatorObject;
-    /**
-     * Declares the property as "read only". This means that it MAY be sent as
-     * part of a response but SHOULD NOT be sent as part of the request.
-     */
-    readOnly?: boolean;
-    /**
-     * Declares the property as "write only". Therefore, it MAY be sent as part
-     * of a request but SHOULD NOT be sent as part of the response.
-     */
-    writeOnly?: boolean;
-    /**
-     * This MAY be used only on properties schemas. It has no effect on root
-     * schemas. Adds additional metadata to describe the XML representation of
-     * this property.
-     */
-    xml?: XMLObject;
-    /**
-     * Additional external documentation for this schema.
-     */
-    externalDocs?: ExternalDocumentationObject;
-    /**
-     * A free-form example of the schema. To represent examples that cannot be
-     * naturally represented in JSON or YAML, a string value can be used to
-     * contain the example with escaping where necessary.
-     */
-    example?: any;
-    /**
-     * Specifies that a schema is deprecated and SHOULD be transitioned out of
-     * usage. Default value is false.
-     */
-    deprecated?: boolean;
-  }
-
-  /**
-   * Non-Array Schema Object
-   *
-   * Schema object for non-array types.
-   */
-  export interface NonArraySchemaObject extends BaseSchemaObject {
-    /**
-     * Value MUST be a string. Multiple types via an array are not supported.
-     */
-    type?: "boolean" | "object" | "number" | "string" | "integer";
-  }
-
-  /**
-   * Array Schema Object
-   *
-   * Schema object specifically for array types.
-   */
-  export interface ArraySchemaObject extends BaseSchemaObject {
-    /**
-     * Value MUST be a string. For arrays, the type MUST be "array".
-     */
-    type: "array";
-    /**
-     * Value MUST be an object and not an array. Inline or referenced schema
-     * MUST be of a Schema Object and not a standard JSON Schema.
-     */
-    items: ReferenceObject | SchemaObject;
-  }
-
-  /**
-   * Discriminator Object
-   *
-   * When request bodies or response payloads may be one of a number of
-   * different schemas, a discriminator object can be used to aid in
-   * serialization, deserialization, and validation.
-   */
-  export interface DiscriminatorObject extends SpecificationExtension {
-    /**
-     * The name of the property in the payload that will hold the discriminator
-     * value.
-     */
-    propertyName: string;
-    /**
-     * An object to hold mappings between payload values and schema names or
-     * references.
-     */
-    mapping?: { [value: string]: string };
-  }
-
-  /**
-   * XML Object
-   *
-   * A metadata object that allows for more fine-tuned XML model definitions.
-   */
-  export interface XMLObject extends SpecificationExtension {
-    /**
-     * Replaces the name of the element/attribute used for the described schema
-     * property.
-     */
-    name?: string;
-    /**
-     * The URI of the namespace definition. Value MUST be in the form of an
-     * absolute URI.
-     */
-    namespace?: string;
-    /**
-     * The prefix to be used for the name.
-     */
-    prefix?: string;
-    /**
-     * Declares whether the property definition translates to an attribute
-     * instead of an element. Default value is false.
-     */
-    attribute?: boolean;
-    /**
-     * MAY be used only for an array definition. Signifies whether the array is
-     * wrapped or not. Default value is false.
-     */
-    wrapped?: boolean;
-  }
-
-  /**
    * Security Requirement Object
    *
    * Lists the required security schemes to execute this operation. The object
@@ -922,19 +642,19 @@ export namespace OpenAPIV3_0 {
     /**
      * An object to hold reusable Response Objects.
      */
-    responses?: { [key: string]: ReferenceObject | ResponseObject };
+    responses?: { [key: string]: ResponseObject };
     /**
      * An object to hold reusable Parameters Objects.
      */
-    parameters?: { [key: string]: ReferenceObject | ParametersObject };
+    parameters?: { [key: string]: ParametersObject };
     /**
      * An object to hold reusable Example Objects.
      */
-    examples?: { [key: string]: ReferenceObject | ExampleObject };
+    examples?: { [key: string]: ExampleObject };
     /**
      * An object to hold reusable Request Body Objects.
      */
-    requestBodies?: { [key: string]: ReferenceObject | RequestBodyObject };
+    requestBodies?: { [key: string]: RequestBodyObject };
     /**
      * An object to hold reusable headers. Each header is defined using
      * StandardSchemaV1.
@@ -943,15 +663,15 @@ export namespace OpenAPIV3_0 {
     /**
      * An object to hold reusable Security Scheme Objects.
      */
-    securitySchemes?: { [key: string]: ReferenceObject | SecuritySchemeObject };
+    securitySchemes?: { [key: string]: SecuritySchemeObject };
     /**
      * An object to hold reusable Link Objects.
      */
-    links?: { [key: string]: ReferenceObject | LinkObject };
+    links?: { [key: string]: LinkObject };
     /**
      * An object to hold reusable Callback Objects.
      */
-    callbacks?: { [key: string]: ReferenceObject | CallbackObject };
+    callbacks?: { [key: string]: CallbackObject };
   }
 
   /**
