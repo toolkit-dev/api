@@ -1,17 +1,46 @@
 name: Daily Documentation Review
 
 on:
-  schedule:
-    - cron: "0 8 * * *" # Midnight PT = 8 AM UTC
   workflow_dispatch:
 
 jobs:
   review-docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Copilot Agent
-        run: |
-          gh agent-task create \
-            "Review .github/copilot-instructions.md for accuracy against current repository state. Check if version references, package counts, and command examples are correct. Create a PR if any updates are needed."
+      - name: Verify GH authentication
+        run: gh auth status
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
+      # We create an issue assigned to Copilot. This is required because the
+      # gh agent-task create command currently only supports authentication via
+      # an OAuth token which cannot be obtained from Github Actions.
+      # Ref: https://github.com/cli/cli/issues/11845
+      - name: Create Copilot Review Issue
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "Review documentation accuracy" \
+            --body "Please review .github/copilot-instructions.md for accuracy
+          against the current repository state.
+
+          Check for substantive gaps or mismatches in:
+          - Version references (Node.js, pnpm, package versions)
+          - Package counts and structure descriptions
+          - Command examples and workflows
+          - Dependencies and configuration files
+          - Build processes and development setup
+
+          IMPORTANT: Only make changes if you find real content gaps or
+          mismatches that affect functionality or accuracy. Do NOT create
+          PRs for:
+          - Minor wording changes or style improvements
+          - Superficial formatting adjustments
+          - Cosmetic updates that don't change meaning
+
+          Focus on ensuring the documentation correctly reflects the actual
+          codebase state and functionality.
+
+          If no changes are needed, close the PR without merging." \
+            --assignee "@copilot"
+        env:
+          GH_TOKEN: ${{ secrets.GH_CREATE_TASK_TOKEN }}
